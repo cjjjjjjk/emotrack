@@ -1,0 +1,35 @@
+# Number of pedestrians
+40
+# T-Distribution' degree of freedom
+15
+# Walkway width
+6
+# Crowd: total length, head/tail length, width
+40 10 2
+# Run mode (0/1)
+1
+# Direction of AGV: 0/1/2/3 - Go from Left/Bottom/Right/Top, 0/1/2 - Turn Right/Go straight/Turn Left
+0 2
+# AGV: Acceleration AGV
+0.25
+# AGV: Distance with Agent that AGV will stop
+0.3
+# Percentage of people stopping at the corridor
+2
+# Percentage of pedestrians at different states
+# - No disability, without overtaking behavior
+22
+# - No disability, with overtaking behavior
+5
+# - Walking with crutches
+17
+# - Walking with sticks
+22
+# - Wheelchairs
+17
+# - The blind
+17
+# Hallway length
+30
+# AGVs run concurrently
+0

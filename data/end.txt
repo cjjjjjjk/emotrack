@@ -1,0 +1,75 @@
+
+	*#* Completed on Sat Feb 24 10:42:22 2024
+J1_0 - 5: AGV ID 0 - 0h 0m 22s 806ms - Collisions 0 - Total stop time 0h 0m 0s 0ms
+Shortest: 0h 0m 22s 806ms - Longest: 0h 0m 22s 806ms
+Average time to travel through the hallway J1_0 is 0h 0m 22s 806ms
+
+J3_0 - 10: AGV ID 1 - 0h 0m 33s 425ms - Collisions 1 - Total stop time 0h 0m 0s 811ms
+Shortest: 0h 0m 33s 425ms - Longest: 0h 0m 33s 425ms
+Average time to travel through the hallway J3_0 is 0h 0m 33s 425ms
+
+J3_1 - 12: AGV ID 2 - 0h 0m 41s 674ms - Collisions 3 - Total stop time 0h 0m 3s 5ms
+Shortest: 0h 0m 41s 674ms - Longest: 0h 0m 41s 674ms
+Average time to travel through the hallway J3_1 is 0h 0m 41s 674ms
+
+	==> Total running time:  0h 1m 39s 0ms
+
+	*#* Completed on Sat Feb 24 17:53:38 2024
+J1_0 - 5: AGV ID 0 - 0h 0m 22s 817ms - Collisions 0 - Total stop time 0h 0m 0s 0ms
+Shortest: 0h 0m 22s 817ms - Longest: 0h 0m 22s 817ms
+Average time to travel through the hallway J1_0 is 0h 0m 22s 817ms
+
+J3_0 - 10: AGV ID 1 - 0h 0m 36s 864ms - Collisions 5 - Total stop time 0h 0m 5s 656ms
+Shortest: 0h 0m 36s 864ms - Longest: 0h 0m 36s 864ms
+Average time to travel through the hallway J3_0 is 0h 0m 36s 864ms
+
+J3_1 - 12: AGV ID 2 - 0h 0m 34s 541ms - Collisions 0 - Total stop time 0h 0m 0s 0ms
+Shortest: 0h 0m 34s 541ms - Longest: 0h 0m 34s 541ms
+Average time to travel through the hallway J3_1 is 0h 0m 34s 541ms
+
+	==> Total running time:  0h 1m 34s 324ms
+
+	*#* Completed on Sat Feb 24 17:55:45 2024
+J1_0 - 5: AGV ID 0 - 0h 0m 22s 808ms - Collisions 0 - Total stop time 0h 0m 0s 0ms
+Shortest: 0h 0m 22s 808ms - Longest: 0h 0m 22s 808ms
+Average time to travel through the hallway J1_0 is 0h 0m 22s 808ms
+
+J3_0 - 10: AGV ID 1 - 0h 0m 31s 209ms - Collisions 0 - Total stop time 0h 0m 0s 0ms
+Shortest: 0h 0m 31s 209ms - Longest: 0h 0m 31s 209ms
+Average time to travel through the hallway J3_0 is 0h 0m 31s 209ms
+
+J3_1 - 12: AGV ID 2 - 0h 0m 36s 110ms - Collisions 1 - Total stop time 0h 0m 1s 967ms
+Shortest: 0h 0m 36s 110ms - Longest: 0h 0m 36s 110ms
+Average time to travel through the hallway J3_1 is 0h 0m 36s 110ms
+
+	==> Total running time:  0h 1m 30s 231ms
+
+	*#* Completed on Mon Feb 26 09:57:19 2024
+J1_0 - 5: AGV ID 0 - 0h 0m 22s 751ms - Collisions 0 - Total stop time 0h 0m 0s 0ms
+Shortest: 0h 0m 22s 751ms - Longest: 0h 0m 22s 751ms
+Average time to travel through the hallway J1_0 is 0h 0m 22s 751ms
+
+J3_0 - 10: AGV ID 1 - 0h 0m 33s 2ms - Collisions 1 - Total stop time 0h 0m 0s 812ms
+Shortest: 0h 0m 33s 2ms - Longest: 0h 0m 33s 2ms
+Average time to travel through the hallway J3_0 is 0h 0m 33s 2ms
+
+J3_1 - 12: AGV ID 2 - 0h 0m 38s 108ms - Collisions 4 - Total stop time 0h 0m 2s 6ms
+Shortest: 0h 0m 38s 108ms - Longest: 0h 0m 38s 108ms
+Average time to travel through the hallway J3_1 is 0h 0m 38s 108ms
+
+	==> Total running time:  0h 1m 35s 10ms
+
+	*#* Completed on Mon Feb 26 09:59:44 2024
+J1_0 - 5: AGV ID 0 - 0h 0m 24s 77ms - Collisions 1 - Total stop time 0h 0m 0s 690ms
+Shortest: 0h 0m 24s 77ms - Longest: 0h 0m 24s 77ms
+Average time to travel through the hallway J1_0 is 0h 0m 24s 77ms
+
+J3_0 - 10: AGV ID 1 - 0h 0m 31s 268ms - Collisions 0 - Total stop time 0h 0m 0s 0ms
+Shortest: 0h 0m 31s 268ms - Longest: 0h 0m 31s 268ms
+Average time to travel through the hallway J3_0 is 0h 0m 31s 268ms
+
+J3_1 - 12: AGV ID 2 - 0h 0m 34s 545ms - Collisions 0 - Total stop time 0h 0m 0s 0ms
+Shortest: 0h 0m 34s 545ms - Longest: 0h 0m 34s 545ms
+Average time to travel through the hallway J3_1 is 0h 0m 34s 545ms
+
+	==> Total running time:  0h 1m 30s 11ms
