@@ -212,5 +212,30 @@
         "value" : 10
       }
     }
+  },
+  "eventDistribution" : {
+    "description" : "distribution of events for all pedestrians",
+    "distribution": {
+      "normal" : {
+        "description" : "normal distribution",
+        "samples"     : "43",
+        "numberOfValues": 200,
+        "minValue" : -1, 
+        "maxValue" : 1,
+        "numberOfFields": 6
+      }
+    }
+  },"timeBetweenEventsDistribution" :
+  {
+    "description" :"distribution of time between happened events for a pedestrian",
+    "distribution": {
+      "normal": {
+        "description":"normal distribution",
+        "samples": 20,
+        "numberOfValues": 200,
+        "minValue": 100,
+        "maxValue" : 3600
+      }
+    }
   }
 }
