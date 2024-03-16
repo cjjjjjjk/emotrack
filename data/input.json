@@ -47,29 +47,83 @@
     "description": "Percentage of people stopping at the hallway",
     "value": 2
   },
-  "p1": {
-    "description": "Percentage of agents (No disability, without overtaking behavior)",
-    "value": 22
+  "walkability" : {
+    "description" : "velocity distribution of pedestrians",
+    "distribution" : {
+      "noDisabilityNoOvertaking": {
+        "description": "Percentage of agents (No disability, without overtaking behavior)",
+        "velocity": 1.24
+      },
+      "noDisabilityOvertaking": {
+        "description" : "Percentage of agents (No disability, with overtaking behavior)",
+        "velocity": 2.48
+      },
+      "crutches": {
+        "description" : "Percentage of agents (Walking with crutches)",
+        "velocity" : 0.94
+      },
+      "sticks": {
+        "description" : "Percentage of agents (Walking with sticks)",
+        "velocity": 0.81
+      },
+      "wheelchairs": {
+        "description" : "Percentage of agents (Wheelchairs)",
+        "velocity" : 0.69
+      },
+      "blind" : {
+        "description" : "Percentage of agents (blinds)",
+        "velocity": 0.52
+      },
+      "normal": {
+        "description": "normal distribution",
+        "samples" : "6",
+        "sumOfValue": "numOfAgents",
+        "lowerBound":"0",
+        "upperBound": "10000"
+      }
+    }
   },
-  "p2": {
-    "description": "Percentage of agents (No disability, with overtaking behavior)",
-    "value": 5
-  },
-  "p3": {
-    "description": "Percentage of agents (Walking with crutches)",
-    "value": 17
-  },
-  "p4": {
-    "description": "Percentage of agents (Walking with sticks)",
-    "value": 22
-  },
-  "p5": {
-    "description": "Percentage of agents (Wheelchairs)",
-    "value": 17
-  },
-  "p6": {
-    "description": "Percentage of agents (The blind)",
-    "value": 17
+  "wardDistribution": {
+    "description" : "distribution of wards for personnels",
+    "distribution" :{
+      "A" : {
+        "description" : "work at Administration Center"
+      },
+      "B" : {
+        "description" : "work at Brain Center"
+      },
+      "C " :{
+        "description" : "work at E Center"
+      },
+      "D" : {
+        "description" : "work at D Center"
+      },
+      "F" : {
+        "description" : "work at F center"
+      }, 
+      "G" : {
+        "description" : "work at G center"
+      },
+      "H" : {
+        "description" : "work at H Center"
+      },
+      "I" : {
+        "description" : "work at I Center"
+      },
+      "K" : {
+        "description" : "work at K Center"
+      },
+      "L" : {
+        "description" : "work at L Center"
+      },
+      "normal" : {
+        "description" : "normal distribution",
+        "samples"     : "13",
+        "sumOfValues" : "forPersonnel",
+        "lowerBound"  : "0",
+        "upperBound"  : "10000"
+      }
+    } 
   },
   "hallwayLength": {
     "description": "Hallway length",
@@ -86,5 +140,45 @@
   "experimentalDeviation": {
     "description": "Experimental deviation (percent)",
     "value": 10
+  },
+  "randomness" :{
+    "description" :"the option for establishing new random configuaration or load from the file",
+    "value": 1
+  },
+  "ageDistribution": {
+    "description": "distribution of age in pedestrians",
+    "distribution": {
+      "normal" :{
+          "description": "normal distribution",
+          "samples" : "numOfAgents",
+          "numberOfValues" : 100,
+          "minValue": 5,
+          "maxValue": 104
+      }
+    }
+  },
+  "journeyDistribution" : {
+    "description" :"distribution of number of wards in a journey",
+    "distribution": {
+      "forPatient": {
+        "description" : "Number of wards that a patient must visit",
+        "value" : "1",
+        "start" : "A",
+        "end"   : "A"
+      },
+      "forVisitor" : {
+        "description" :"Number of wards that a visitor must visit",
+        "value" : "1",
+        "start" : "A",
+        "end"   : "A"
+      },
+      "forPersonnel": {
+        "description" : "Number of wards that a personnel must visit",
+        "value"       : "3",
+        "start"       : "wardDistribution",
+        "end"         : "start",
+        "threshold"   : "noDisabilityNoOvertaking+noDisabilityOvertaking"
+      }
+    }
   }
 }
