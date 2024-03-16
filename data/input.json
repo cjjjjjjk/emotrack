@@ -203,5 +203,14 @@
       "positiveEmotionThrehold" : "0.8",
       "negativeEmotionThreshold": "-0.8"
     }
+  },
+  "insideTimeDistribution" : {
+    "description" : "distribution of inside for a pedestrian",
+    "distribution" : {
+      "uinform": {
+        "description" : "uniform distribution",
+        "value" : 10
+      }
+    }
   }
 }
