@@ -180,5 +180,28 @@
         "threshold"   : "noDisabilityNoOvertaking+noDisabilityOvertaking"
       }
     }
+  },
+  "personalityDistribution" : {
+    "description" : "distribution of personality in a pedestrian",
+    "distribution" : {
+      "open" : {
+        "description" : "open personalities atr more optimistic when facing setbacks and will be more active in solvinh difficulties",
+        "positiveEmotionThrehold" : "0.3",
+        "negativeEmotionThreshold" : "-0.7",
+        "percentage" : 50,
+        "lambda" : 1
+      },
+      "nerotic" : {
+        "description" : "Neurotic personalities tend to behave negatively in the face of the same frustration.",
+        "positiveEmotionThrehold" : "0.6",
+        "negativeEmotionThreshold": "-0.4",
+        "percentage": 50,
+        "lambda": 4
+      }
+    },
+    "heuristic" : {
+      "positiveEmotionThrehold" : "0.8",
+      "negativeEmotionThreshold": "-0.8"
+    }
   }
 }
