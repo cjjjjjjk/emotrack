@@ -237,5 +237,29 @@
         "maxValue" : 3600
       }
     }
+  },
+  "p1": {
+    "description": "Percentage of agents (No disability, without overtaking behavior)",
+    "value": 22
+  },
+  "p2": {
+    "description": "Percentage of agents (No disability, with overtaking behavior)",
+    "value": 5
+  },
+  "p3": {
+    "description": "Percentage of agents (Walking with crutches)",
+    "value": 17
+  },
+  "p4": {
+    "description": "Percentage of agents (Walking with sticks)",
+    "value": 22
+  },
+  "p5": {
+    "description": "Percentage of agents (Wheelchairs)",
+    "value": 17
+  },
+  "p6": {
+    "description": "Percentage of agents (The blind)",
+    "value": 17
   }
 }
