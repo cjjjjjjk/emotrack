@@ -92,14 +92,11 @@ int main(int argc, char **argv)
                 int G1_x, G1_y, G2_x, G2_y, lenght;
                 char ID;
                 iss>>G1_x>>G1_y>>G2_x>>G2_y>>lenght>>ID;
-                std::cout<<"\n"<<G1_x;
                 room = std::make_shared<Room>(G1_x, G1_y, G2_x, G2_y, lenght, ID);
-                // room = new Room(std::stoi(G1_x), std::stoi(G1_y), std::stoi(G2_x),std::stoi(G2_y),std::stoi(lenght), ID );
                 room_list.push_back(room);
             } else
             {
                 if(lineNo == 1) file>>roomNumber;
-                // std::cout<<"\nOKE - "<<" ln: "<<lineNo;
             }
             lineNo++;
         }
