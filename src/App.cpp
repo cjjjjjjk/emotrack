@@ -13,8 +13,7 @@
 #include "model/SocialForce.h"
 #include "constant/Constant.h"
 #include "renderer/Renderer.h"
-#include "room/Room.h"       
-#include "room/Room.h"       
+#include "room/Room.h"             
 
 using namespace std;
 using namespace Constant;
@@ -24,8 +23,7 @@ using json = nlohmann::json;
 // Global Variables
 GLsizei winWidth = 1920; // Window width (16:10 ratio)
 GLsizei winHeight = 1080; // Window height (16:10 ratio)
-GLsizei winWidth = 1920; // Window width (16:10 ratio)
-GLsizei winHeight = 1080; // Window height (16:10 ratio)
+
 SocialForce *socialForce;
 float fps = 0; // Frames per second
 int currTime = 0;
@@ -51,14 +49,6 @@ int threshold = 0;
 // SCREEN START WALL
 #define TOPLEFT_X -20
 #define TOPLEFT_Y 11
-
-// Room list
-std::vector<std::shared_ptr<Room>> room_list;
-
-// SCREEN START WALL
-#define TOPLEFT_X -20
-#define TOPLEFT_Y 11
-
 // Room list
 std::vector<std::shared_ptr<Room>> room_list;
 
@@ -116,40 +106,6 @@ int main(int argc, char **argv)
     }
     // ============================================================
 
-
-    std::string input1;
-
-    // Read hospital map data ========================= author: Hai
-    // => room_list
-    std::shared_ptr<Room> room;
-    int roomNumber; 
-    std::string hospital_map = "data/hospital.txt";
-    std::ifstream file(hospital_map);
-    if(file.is_open())
-    {
-        std::string line;
-        int lineNo = 1;
-        while(std::getline(file, line))
-        {
-            if(lineNo != 1 && lineNo <= 11) 
-            {
-                std::istringstream iss(line); 
-                int G1_x, G1_y, G2_x, G2_y, lenght;
-                char ID;
-                iss>>G1_x>>G1_y>>G2_x>>G2_y>>lenght>>ID;
-                room = std::make_shared<Room>(G1_x, G1_y, G2_x, G2_y, lenght, ID);
-                room_list.push_back(room);
-            } else
-            {
-                if(lineNo == 1) file>>roomNumber;
-            }
-            lineNo++;
-        }
-        file.close();
-    } else{
-        std::cout<<"\nERROR: Can not open hospital map  file !! \n";
-    }
-    // ============================================================
 
 
     std::string input1;
