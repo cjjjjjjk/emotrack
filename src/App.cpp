@@ -14,6 +14,7 @@
 #include "constant/Constant.h"
 #include "renderer/Renderer.h"
 #include "room/Room.h"       
+#include "room/Room.h"       
 
 using namespace std;
 using namespace Constant;
@@ -21,6 +22,8 @@ using namespace Renderer;
 using json = nlohmann::json;
 
 // Global Variables
+GLsizei winWidth = 1920; // Window width (16:10 ratio)
+GLsizei winHeight = 1080; // Window height (16:10 ratio)
 GLsizei winWidth = 1920; // Window width (16:10 ratio)
 GLsizei winHeight = 1080; // Window height (16:10 ratio)
 SocialForce *socialForce;
@@ -52,6 +55,13 @@ int threshold = 0;
 // Room list
 std::vector<std::shared_ptr<Room>> room_list;
 
+// SCREEN START WALL
+#define TOPLEFT_X -20
+#define TOPLEFT_Y 11
+
+// Room list
+std::vector<std::shared_ptr<Room>> room_list;
+
 // Function Prototypes
 void init();
 
@@ -73,6 +83,41 @@ int main(int argc, char **argv)
 {
     inputData = Utility::readInputData("data/input.json");
     mapData = Utility::readMapData("data/map.txt");
+
+    // Read hospital map data ========================= author: Hai
+    // => room_list
+    std::shared_ptr<Room> room;
+    int roomNumber; 
+    std::string hospital_map = "data/hospital.txt";
+    std::ifstream file(hospital_map);
+    if(file.is_open())
+    {
+        std::string line;
+        int lineNo = 1;
+        while(std::getline(file, line))
+        {
+            if(lineNo != 1 && lineNo <= 11) 
+            {
+                std::istringstream iss(line); 
+                int G1_x, G1_y, G2_x, G2_y, lenght;
+                char ID;
+                iss>>G1_x>>G1_y>>G2_x>>G2_y>>lenght>>ID;
+                room = std::make_shared<Room>(G1_x, G1_y, G2_x, G2_y, lenght, ID);
+                room_list.push_back(room);
+            } else
+            {
+                if(lineNo == 1) file>>roomNumber;
+            }
+            lineNo++;
+        }
+        file.close();
+    } else{
+        std::cout<<"\nERROR: Can not open hospital map  file !! \n";
+    }
+    // ============================================================
+
+
+    std::string input1;
 
     // Read hospital map data ========================= author: Hai
     // => room_list
@@ -250,7 +295,62 @@ void createWalls()
         (-20,-11)---------------(20, -11)
         */
         wall = new Wall(TOPLEFT_X, TOPLEFT_Y, -TOPLEFT_X, TOPLEFT_Y);
+        // Wall border ======================== author: Hai
+        /* Border coordinate 
+        (-20,11)----------------(20; 11)
+            |                       |
+            |                       |
+        (-20,-11)---------------(20, -11)
+        */
+        wall = new Wall(TOPLEFT_X, TOPLEFT_Y, -TOPLEFT_X, TOPLEFT_Y);
         socialForce->addWall(wall);
+
+        wall = new Wall(TOPLEFT_X, TOPLEFT_Y, TOPLEFT_X, 3);
+        socialForce->addWall(wall);
+        wall = new Wall(TOPLEFT_X, -TOPLEFT_Y, TOPLEFT_X, -3);
+        socialForce->addWall(wall);
+
+        wall = new Wall(TOPLEFT_X, -TOPLEFT_Y, -TOPLEFT_X, -TOPLEFT_Y);
+        socialForce->addWall(wall);
+
+        wall = new Wall(-TOPLEFT_X, -TOPLEFT_Y, -TOPLEFT_X, -3);
+        socialForce->addWall(wall);
+        wall = new Wall(-TOPLEFT_X, 3, -TOPLEFT_X, TOPLEFT_Y);
+        socialForce->addWall(wall);
+        // Room wall ============================== author: Hai
+
+        for(auto room : room_list)
+        {
+            int top_left_x = room->GetGate1_x()-room->GetLength()/2;
+            int bot_left_x = room->GetGate2_x()-room->GetLength()/2;
+            // wall 1:
+            wall = new Wall(top_left_x, room->GetGate1_y(), room->GetGate1_x()-1, room->GetGate1_y()); 
+            socialForce->addWall(wall);
+            // wall 2:
+            wall = new Wall(room->GetGate1_x()+1, room->GetGate1_y(), top_left_x+room->GetLength(), room->GetGate1_y());
+            socialForce->addWall(wall);
+            // wall 3
+            wall = new Wall(top_left_x+room->GetLength(), room->GetGate1_y(), bot_left_x+room->GetLength(), room->GetGate2_y());
+            socialForce->addWall(wall);
+            // wall 4 - bot wall 2
+            wall = new Wall(bot_left_x + room->GetLength(), room->GetGate2_y(), room->GetGate2_x()+1, room->GetGate2_y());
+            socialForce->addWall(wall);
+            // wall 5 - bot wall 1
+            wall = new Wall(bot_left_x, room->GetGate2_y(), room->GetGate2_x()-1, room->GetGate2_y());
+            socialForce->addWall(wall);
+            // wall 6 - left wall
+            wall = new Wall(top_left_x, room->GetGate1_y(), bot_left_x, room->GetGate2_y());
+            socialForce->addWall(wall);
+        }
+        // ==================================================
+
+
+        // Upper Wall   
+        // wall = new Wall(coors[0], coors[1], coors[2], coors[3]);
+        // socialForce->addWall(wall);
+        // Lower Wall
+        // wall = new Wall(coors[4], coors[5], coors[6], coors[7]);
+        // socialForce->addWall(wall);
 
         wall = new Wall(TOPLEFT_X, TOPLEFT_Y, TOPLEFT_X, 3);
         socialForce->addWall(wall);
@@ -707,6 +807,8 @@ void display()
     drawWalls(socialForce);
     glPopMatrix();
 
+    // not show infor - testting
+    showInformation(socialForce, fps, animate, currTime, startTime, classificationType, winWidth, winHeight);
     // not show infor - testting
     // showInformation(socialForce, fps, animate, currTime, startTime, classificationType, winWidth, winHeight);
 
