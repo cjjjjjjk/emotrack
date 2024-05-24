@@ -2,6 +2,7 @@
 
 using namespace Renderer;
 
+
 void Renderer::drawAgents(SocialForce *socialForce)
 {
     vector<Agent *> agents = socialForce->getCrowd();
@@ -234,7 +235,7 @@ void Renderer::drawText(float x, float y, const char text[])
     glPushMatrix();
     glTranslatef(x, y, 0.0);
     glScalef(0.0045F, 0.0045F, 0.0);
-    glLineWidth(0.8F);
+    glLineWidth(2.0F);
 
     int idx = 0;
     while (text[idx] != '\0')
@@ -271,26 +272,27 @@ void Renderer::showInformation(
     GLsizei winHeight)
 {
     Point3f margin;
-
-    margin.x = static_cast<float>(-winWidth) / 60;
-    margin.y = static_cast<float>(winHeight) / 60 - 0.75F;
+    // margin.x = static_cast<float>(-winWidth) / 60;
+    // margin.y = static_cast<float>(winHeight) / 60 - 0.75F;
+    margin.x = -18;
+    margin.y = 0;
 
     glColor3f(0.0, 0.0, 0.0);
 
     // Total Agents
-    drawText(margin.x, margin.y - 0.9F, "Total agents:");
+    drawText(margin.x - 2.0F, margin.y +11.0F, "Total agents:");
     std::string s = std::to_string(socialForce->getCrowdSize());
     drawText(
-        margin.x + 4.0F, margin.y - 0.9F, // totalAgentsStr
+        margin.x + 2.0F, margin.y +11.0F, // totalAgentsStr
         s.c_str());
 
     // FPS
-    drawText(margin.x, margin.y, "FPS:");
+    drawText(margin.x + 18.0F, margin.y +11.0F, "FPS:");
     s = std::to_string(static_cast<int>(fps));
-    drawText(margin.x + 1.7F, margin.y, s.c_str() /*fpsStr*/);
+    drawText(margin.x + 20.5F, margin.y +11.0F, s.c_str() /*fpsStr*/);
 
     // Simulation Time
-    drawText(margin.x, margin.y - 1.8F, "Simulation time:");
+    drawText(margin.x + 5.0F, margin.y +11.0F, "Simulation time:");
     if (animate)
     {
         s = convertTime(currTime - startTime);
@@ -299,37 +301,36 @@ void Renderer::showInformation(
     {
         s = convertTime(0);
     }
-
     drawText(
-        margin.x + 5.0F, margin.y - 1.8F, // totalAgentsStr
+        margin.x + 10.0F, margin.y +11.0F, // totalAgentsStr
         s.c_str());
 
     // Appendix
     if (classificationType == 0)
     {
-        drawSquare(margin.x, -margin.y + 5.2, 0.3, GREEN);
+        drawSquare(margin.x+ 38.5, -margin.y + 4.0 + 5.2, 0.3, GREEN);
         glColor3f(0.0, 0.0, 0.0);
-        drawText(margin.x + 0.5, -margin.y + 5, "No disability, without overtaking behavior");
+        drawText(margin.x+ 38.5 + 0.5, -margin.y + 4.0 + 5, "No disability, without overtaking behavior");
 
-        drawSquare(margin.x, -margin.y + 4.2, 0.3, PURPLE);
+        drawSquare(margin.x+ 38.5, -margin.y + 4.0 + 4.2, 0.3, PURPLE);
         glColor3f(0.0, 0.0, 0.0);
-        drawText(margin.x + 0.5, -margin.y + 4, "No disability, with overtaking behavior");
+        drawText(margin.x+ 38.5 + 0.5, -margin.y + 4.0 + 4, "No disability, with overtaking behavior");
 
-        drawSquare(margin.x, -margin.y + 3.2, 0.3, RED);
+        drawSquare(margin.x+ 38.5, -margin.y + 4.0 + 3.2, 0.3, RED);
         glColor3f(0.0, 0.0, 0.0);
-        drawText(margin.x + 0.5, -margin.y + 3, "Walking with crutches");
+        drawText(margin.x+ 38.5 + 0.5, -margin.y + 4.0 + 3, "Walking with crutches");
 
-        drawSquare(margin.x, -margin.y + 2.2, 0.3, WOOD);
+        drawSquare(margin.x+ 38.5, -margin.y + 4.0 + 2.2, 0.3, WOOD);
         glColor3f(0.0, 0.0, 0.0);
-        drawText(margin.x + 0.5, -margin.y + 2, "Walking with sticks");
+        drawText(margin.x+ 38.5 + 0.5, -margin.y + 4.0 + 2, "Walking with sticks");
 
-        drawSquare(margin.x, -margin.y + 1.2, 0.3, GRAY);
+        drawSquare(margin.x+ 38.5, -margin.y + 4.0 + 1.2, 0.3, GRAY);
         glColor3f(0.0, 0.0, 0.0);
-        drawText(margin.x + 0.5, -margin.y + 1, "Wheelchairs");
+        drawText(margin.x+ 38.5 + 0.5, -margin.y + 4.0 + 1, "Wheelchairs");
 
-        drawSquare(margin.x, -margin.y + 0.2, 0.3, BLACK);
+        drawSquare(margin.x+ 38.5, -margin.y + 4.0 + 0.2, 0.3, BLACK);
         glColor3f(0.0, 0.0, 0.0);
-        drawText(margin.x + 0.5, -margin.y, "The blind");
+        drawText(margin.x+ 38.5 + 0.5, -margin.y + 4.0, "The blind");
     }
     else
     {

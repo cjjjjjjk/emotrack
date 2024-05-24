@@ -708,7 +708,7 @@ void display()
     glPopMatrix();
 
     // not show infor - testting
-    // showInformation(socialForce, fps, animate, currTime, startTime, classificationType, winWidth, winHeight);
+    showInformation(socialForce, fps, animate, currTime, startTime, classificationType, winWidth, winHeight);
 
     glutSwapBuffers();
 }
