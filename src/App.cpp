@@ -13,7 +13,8 @@
 #include "model/SocialForce.h"
 #include "constant/Constant.h"
 #include "renderer/Renderer.h"
-#include "room/Room.h"             
+#include "ward/Ward.h"       
+#
 
 using namespace std;
 using namespace Constant;
@@ -21,7 +22,7 @@ using namespace Renderer;
 using json = nlohmann::json;
 
 // Global Variables
-GLsizei winWidth = 1920; // Window width (16:10 ratio)
+GLsizei winWidth = 3200; // Window width (16:10 ratio)
 GLsizei winHeight = 1080; // Window height (16:10 ratio)
 
 SocialForce *socialForce;
@@ -50,7 +51,7 @@ int threshold = 0;
 #define TOPLEFT_X -20
 #define TOPLEFT_Y 11
 // Room list
-std::vector<std::shared_ptr<Room>> room_list;
+std::vector<std::shared_ptr<Ward>> room_list;
 
 // Function Prototypes
 void init();
@@ -76,7 +77,7 @@ int main(int argc, char **argv)
 
     // Read hospital map data ========================= author: Hai
     // => room_list
-    std::shared_ptr<Room> room;
+    std::shared_ptr<Ward> room;
     int roomNumber; 
     std::string hospital_map = "data/hospital.txt";
     std::ifstream file(hospital_map);
@@ -92,7 +93,7 @@ int main(int argc, char **argv)
                 int G1_x, G1_y, G2_x, G2_y, lenght;
                 char ID;
                 iss>>G1_x>>G1_y>>G2_x>>G2_y>>lenght>>ID;
-                room = std::make_shared<Room>(G1_x, G1_y, G2_x, G2_y, lenght, ID);
+                room = std::make_shared<Ward>(G1_x, G1_y, G2_x, G2_y, lenght, ID);
                 room_list.push_back(room);
             } else
             {
