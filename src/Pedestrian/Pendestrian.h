@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "../ward/Ward.h"
+// #include "../ward/Ward.h"
 // Author: HAI =========================================
 class Pendestrian
 {
@@ -10,10 +10,10 @@ private:
     double workingTime;
     double distance;
     double age;
-    Ward start;
-    Ward end;
+    // Ward start;
+    // Ward end;
 
-    std::vector<Ward> journey; 
+    // std::vector<Ward> journey; 
     
 
 public:
