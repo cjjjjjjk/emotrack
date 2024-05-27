@@ -1,3 +1,4 @@
+#pragma once
 #include "lib/vecmath/vecmath.h"
 class Ward
 {

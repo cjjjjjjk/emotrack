@@ -1,3 +1,4 @@
+#pragma once
 #include "Pendestrian.h"
 
 class Patient : public Pendestrian

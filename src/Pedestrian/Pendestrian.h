@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -20,12 +21,6 @@ private:
     
 
 public:
-    Pendestrian();
-    ~Pendestrian();
+    Pendestrian() {};
+    ~Pendestrian() {};
 };
-
-Pendestrian::Pendestrian(/* args */)
-{}
-
-Pendestrian::~Pendestrian()
-{}

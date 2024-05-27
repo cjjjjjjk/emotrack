@@ -13,7 +13,8 @@
 #include "model/SocialForce.h"
 #include "constant/Constant.h"
 #include "renderer/Renderer.h"
-#include "ward/Ward.h"       
+#include "ward/Ward.h"      
+#include "mainHandle/myApp.hpp" 
 #
 
 using namespace std;
@@ -107,6 +108,14 @@ int main(int argc, char **argv)
     }
     // ============================================================
 
+    // Create pedestrian arr ================= author: Hai ========
+    // Xây dựng mảng các người đi bộ (pedestrian)
+    CreatePedestrian_list();
+    
+
+
+    // ============================================================
+    
 
     std::string input1;
     if ((int)inputData["runMode"]["value"] == 0)
