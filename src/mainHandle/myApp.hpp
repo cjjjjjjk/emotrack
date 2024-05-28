@@ -145,7 +145,7 @@ std::vector<std::pair<std::shared_ptr<Ward>, int>>  Create_pairWard_list(std::ve
 }
 
 
-// Bai 5:
+// Bài 5: Xây dựng lộ trình (journey) cho 50 người đi bộ.
 void SetPedesJourney(std::vector<std::shared_ptr<Pendestrian>> &pedestrian_list, std::vector<std::shared_ptr<Ward>> &Ward_list)
 {
     int single = numberOfVisitor;
@@ -153,10 +153,15 @@ void SetPedesJourney(std::vector<std::shared_ptr<Pendestrian>> &pedestrian_list,
     std::cout<<"triple : "<<triple<<"  single:  "<<single<<"\n";
     std::vector<std::pair<std::shared_ptr<Ward>, int>> pair_list = Create_pairWard_list(Ward_list, triple, single); 
 
+    // Hiện để kiểm tra thông tin ----------
     std::shared_ptr<Ward> ward;
     for(int i = 0;  i < pair_list.size(); i++ )
     {
         ward = pair_list[i].first;
         std::cout<<"Room: "<<ward->GetID()<<" repeat: "<<pair_list[i].second<<"\n";
     }
+    //--------------------------------------
+
+    
+
 }
