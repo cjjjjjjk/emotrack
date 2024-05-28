@@ -32,6 +32,7 @@ public:
     Pendestrian() : start(nullptr), end(nullptr), journey({}) {
         std::cout<<" Create a pedestrian ! \n";
     };
+    Pendestrian(int ID, double age) : ID(ID), age(age) {};
     Pendestrian(int ID, int age, int velocity, int walkingTime, int distace, std::shared_ptr<Ward> start, std::shared_ptr<Ward> end) : 
     ID(ID), age(age), velocity(velocity), walkingTime(walkingTime), distance(distace), start(start), end(end)
     {};

@@ -110,8 +110,6 @@ int main(int argc, char **argv)
 
     // Create pedestrian arr ================= author: Hai ========
     // Xây dựng mảng các người đi bộ (pedestrian)
-    CreatePedestrian_list();
-    
 
 
     // ============================================================
