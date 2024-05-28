@@ -32,7 +32,7 @@ int startTime = 0;
 bool animate = false; // Animate scene flag
 float speedConsiderAsStop = 0.2;
 
-json inputData;
+
 std::map<std::string, std::vector<float>> mapData;
 std::vector<json> juncDataList;
 std::vector<float> juncData;
@@ -113,12 +113,9 @@ int main(int argc, char **argv)
     // Create pedestrian arr ================= author: Hai ========
     // Xây dựng mảng các người đi bộ (pedestrian)
     CreatePedestrian_list(pedestrian_list, 50);
-    pedestrian_list[0]->GetType();
-
-
-    // ============================================================
     
 
+    // ============================================================
     std::string input1;
     if ((int)inputData["runMode"]["value"] == 0)
     {
