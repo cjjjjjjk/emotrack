@@ -78,8 +78,16 @@ int main(int argc, char **argv)
     inputData = Utility::readInputData("data/input.json");
     mapData = Utility::readMapData("data/map.txt");
 
-    // Read hospital map data ========================= author: Hai
-    // => room_list
+
+
+
+
+
+
+
+
+    //==================================================================================================
+    // Read hospital map data ============================================================== author: Hai
     std::shared_ptr<Ward> room;
     int roomNumber; 
     std::string hospital_map = "data/hospital.txt";
@@ -108,14 +116,38 @@ int main(int argc, char **argv)
     } else{
         std::cout<<"\nERROR: Can not open hospital map  file !! \n";
     }
-    // ============================================================
+    // =========================================================================================== Hai
+    // ===============================================================================================
 
-    // Create pedestrian arr ================= author: Hai ========
+    // Create pedestrian arr ================= author: Hai ===========================================
     // Xây dựng mảng các người đi bộ (pedestrian)
     CreatePedestrian_list(pedestrian_list, 50);
     SetPedesJourney(pedestrian_list, room_list);
+    
+    // Test thong tin pedestrian =============================================RUN-> ERROR: Core dumped
+    // std::cout<<"Number of pedestrians: "<<pedestrian_list.size()<<"\n===================================\n";
+    // for(long unsigned int i = 0; i<= pedestrian_list.size(); i++)
+    // {
+    // std::string type;
+    // if(pedestrian_list[i]->GetPedesType() == PedesType::patient) type = "Patient ";
+    // else if(pedestrian_list[i]->GetPedesType() == PedesType::personel) type = "Personel ";
+    // else if(pedestrian_list[i]->GetPedesType() == PedesType::visitor) type = "Visitor ";
+    // std::cout<<"ID : "<<pedestrian_list[i]->GetID()<<"   \t- "<<type<<'\n';
+    // std::cout<<"Age: "<<pedestrian_list[i]->GetAge()<<"   \t- V: "<<pedestrian_list[i]->GetVelo()<<"\n";
+    // std::cout<<"===================================\n";
+    // }
+    // ===============================================================================================
 
-    // ============================================================
+
+
+
+
+
+
+
+
+
+
     std::string input1;
     if ((int)inputData["runMode"]["value"] == 0)
     {

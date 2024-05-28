@@ -12,7 +12,6 @@ public:
     : Pendestrian(ID, age, velocity,walkingTime,distace, start, end) {};
     ~Personel();
 
-    void GetType() override {std::cout<<"A Personel ! \n";};
 };
 
 Personel::Personel(/* args */)

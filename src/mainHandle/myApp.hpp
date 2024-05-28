@@ -61,19 +61,20 @@ void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian
         {
                 if(numberOfPersonel < (numberOfwalkability[0]+numberOfwalkability[1])){
 
-                std::shared_ptr<Personel> personel = std::make_shared<Personel>(IDcount, age);
-                numberOfPersonel++;
-                // Xay dung cac gia tri con lai
+                    std::shared_ptr<Personel> personel = std::make_shared<Personel>(IDcount, age);
+                    numberOfPersonel++;
+                    // Xay dung cac gia tri con lai
 
-
-
-                // Them doi tuong vao mang
-                pedestrian_list.push_back(personel);
+                    personel->SetVelocity(v);
+                    personel->SetType(PedesType::personel);
+                    // Them doi tuong vao mang
+                    pedestrian_list.push_back(personel);
                 } else{
                     std::shared_ptr<Visitor> visitor = std::make_shared<Visitor>(IDcount, age);
                     visitor->SetWalkability(Walkability::noDisability);
                     numberOfVisitor++;
-
+                    visitor->SetType(PedesType::visitor);
+                    visitor->SetVelocity(v);
                     pedestrian_list.push_back(visitor);
                 }
         } else if(checkType(age, v) == 2) // patient
@@ -81,18 +82,18 @@ void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian
             std::shared_ptr<Patient> patient = std::make_shared<Patient>(IDcount, age);
             numberOfPatient++;
             patient->SetWalkability(Walkability::crutches);
+            patient->SetType(PedesType::patient);
+            patient->SetVelocity(v);
             pedestrian_list.push_back(patient);
         } else
         {
             std::shared_ptr<Visitor> visitor = std::make_shared<Visitor> (IDcount, age);
             visitor->SetWalkability(Walkability::noDisability);
             numberOfVisitor++;
-
+            visitor->SetType(PedesType::visitor);
+            visitor->SetVelocity(v);
             pedestrian_list.push_back(visitor);
         }
-        
-
-
     }
     std::cout<<"Pendestrian: "<<pedestrian_list.size()<<"\n";
     std::cout<<"Personel: "<<numberOfPersonel<<"\n";

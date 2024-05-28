@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include "src/ward/Ward.h"
+#include "src/object/MovingObject.h"
 // Author: HAI =========================================
 enum Walkability {
     noDisability, 
@@ -12,14 +13,20 @@ enum Walkability {
     wheelchairs, 
     blind
 };
-class Pendestrian
+enum PedesType{
+    patient,
+    visitor,
+    personel
+};
+class Pendestrian : public MovingObject
 {
 private:
     int ID; 
+    double age;
+    PedesType type;
     double velocity;
     double walkingTime;
     double distance;
-    double age;
     // Ward start;
     // Ward end;
     std::shared_ptr<Ward> start;
@@ -39,8 +46,10 @@ public:
 
     virtual ~Pendestrian() = default;
 
+    void SetType(PedesType type) {this->type = type;};
     void SetID(int id){ID = id;};
     void SetAge(double ag) {age = ag;};
+    void SetVelocity(double v) {velocity = v;};
     void SetDistance(double dis) {distance = dis;};
     void SetWalkingTime(double time) {walkingTime = time;};
     void SetStartWard(std::shared_ptr<Ward> ward) {start = ward;};
@@ -50,9 +59,10 @@ public:
 
     int GetID() {return this->ID;};
     double GetAge() { return this->age;};
+    PedesType GetPedesType(){return type;};
+    double GetVelo() {return this->velocity;};
     std::shared_ptr<Ward> getStartWard() {return start;};
     std::shared_ptr<Ward> getEndWard() {return end;};
     std::vector<std::shared_ptr<Ward>> getJourney() {return journey;};
 
-    virtual void GetType(){};
 };
