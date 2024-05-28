@@ -113,7 +113,7 @@ int main(int argc, char **argv)
     // Create pedestrian arr ================= author: Hai ========
     // Xây dựng mảng các người đi bộ (pedestrian)
     CreatePedestrian_list(pedestrian_list, 50);
-    
+    SetPedesJourney(pedestrian_list, room_list);
 
     // ============================================================
     std::string input1;

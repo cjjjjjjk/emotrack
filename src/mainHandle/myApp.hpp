@@ -1,18 +1,22 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <random>
+#include <utility>
 #include <lib/nlohmann/json.hpp>
 #include <src/utility/Utility.h>
 #include "src/Pedestrian/Pendestrian.h"
 #include "src/Pedestrian/personel.h"
 #include "src/Pedestrian/patient.h"
 #include "src/Pedestrian/visitor.h"
+#include "src/ward/Ward.h"
 
 
 json inputData = Utility::readInputData("data/input.json");
 int numberOfPersonel = 0;
 int numberOfVisitor = 0;
 int numberOfPatient = 0;
+int numberOfAgent = (int)inputData["numOfAgents"]["value"];
 int checkType(double age, double v) // 1-Personel  2-Patient 3-Visitor
 {
     if(age < 61 && age > 23 && v > 1.2) return 1;
@@ -94,5 +98,64 @@ void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian
     std::cout<<"Personel: "<<numberOfPersonel<<"\n";
     std::cout<<"Visitor : "<<numberOfVisitor<<"\n";
     std::cout<<"Patient : "<<numberOfPatient<<"\n";
+}
 
+
+// Bai 4: So lan xuat hien cac phong theo luat phan phoi chuan
+std::vector<std::pair<std::shared_ptr<Ward>, int>>  Create_pairWard_list(std::vector<std::shared_ptr<Ward>> Ward_list, int triple, int single)
+{
+    std::vector<std::pair<std::shared_ptr<Ward>, int>> rs ;
+    int total = triple*3 + single;
+    if((triple+single) != numberOfAgent ) 
+    {
+        std::cout<<"Gia tri triple va single khong thoa man  ="<<(int)inputData["numOfAgents"]["value"]<<"!  ";
+        return rs ;
+    }
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::normal_distribution<> d(0, 1);
+    std::vector<int> intValues;
+    int currentSum = 0;
+    for (size_t i = 0; i < Ward_list.size(); ++i) {
+        int value = std::round(d(gen));
+        intValues.push_back(value);
+        currentSum += value;
+    }
+
+    int diff = total - currentSum;
+    while (diff != 0) {
+        for (size_t i = 0; i < intValues.size() && diff != 0; ++i) {
+            if (diff > 0) {
+                ++intValues[i];
+                --diff;
+            } else if (diff < 0) {
+                --intValues[i];
+                ++diff;
+            }
+        }
+    }
+
+    for (size_t i = 0; i < Ward_list.size(); ++i) {
+        rs.push_back(std::make_pair(Ward_list[i], intValues[i]));
+    }
+
+    return rs;
+}
+
+
+// Bai 5:
+void SetPedesJourney(std::vector<std::shared_ptr<Pendestrian>> &pedestrian_list, std::vector<std::shared_ptr<Ward>> &Ward_list)
+{
+    int single = numberOfVisitor;
+    int triple = numberOfAgent - single;
+    std::cout<<"triple : "<<triple<<"  single:  "<<single<<"\n";
+    std::vector<std::pair<std::shared_ptr<Ward>, int>> pair_list = Create_pairWard_list(Ward_list, triple, single); 
+
+    std::shared_ptr<Ward> ward;
+    for(int i = 0;  i < pair_list.size(); i++ )
+    {
+        ward = pair_list[i].first;
+        std::cout<<"Room: "<<ward->GetID()<<" repeat: "<<pair_list[i].second<<"\n";
+    }
 }
