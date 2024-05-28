@@ -12,4 +12,6 @@ public:
     : Pendestrian(ID, age, velocity,walkingTime,distace, start, end), walkability(wal) {};
     ~Patient() {};
 
+    void SetWalkability(Walkability wal) {this->walkability = wal;};
+    Walkability GetWalkability(){return this->walkability;};
 };
