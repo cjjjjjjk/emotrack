@@ -26,7 +26,7 @@ bool check_age(int type, int age)
 }
 
 
-void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> pedestrian_list, int M = 50)
+void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian_list, int M = 50)
 {
     int IDcount = 0;
     // Mang do tuoi cua 50 nguoi di bo

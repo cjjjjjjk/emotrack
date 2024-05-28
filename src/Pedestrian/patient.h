@@ -14,4 +14,6 @@ public:
 
     void SetWalkability(Walkability wal) {this->walkability = wal;};
     Walkability GetWalkability(){return this->walkability;};
+
+    void GetType() override {std::cout<<"A Patient ! ";};
 };

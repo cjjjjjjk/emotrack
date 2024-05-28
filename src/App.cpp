@@ -53,6 +53,8 @@ int threshold = 0;
 
 // Room list
 std::vector<std::shared_ptr<Ward>> room_list;
+// Pendestrian list
+std::vector<std::shared_ptr<Pendestrian>> pedestrian_list;
 
 // Function Prototypes
 void init();
@@ -110,6 +112,8 @@ int main(int argc, char **argv)
 
     // Create pedestrian arr ================= author: Hai ========
     // Xây dựng mảng các người đi bộ (pedestrian)
+    CreatePedestrian_list(pedestrian_list, 50);
+    pedestrian_list[0]->GetType();
 
 
     // ============================================================

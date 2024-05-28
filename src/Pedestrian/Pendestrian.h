@@ -37,8 +37,7 @@ public:
     ID(ID), age(age), velocity(velocity), walkingTime(walkingTime), distance(distace), start(start), end(end)
     {};
 
-    ~Pendestrian() {
-    };
+    virtual ~Pendestrian() = default;
 
     void SetID(int id){ID = id;};
     void SetAge(double ag) {age = ag;};
@@ -55,4 +54,5 @@ public:
     std::shared_ptr<Ward> getEndWard() {return end;};
     std::vector<std::shared_ptr<Ward>> getJourney() {return journey;};
 
+    virtual void GetType(){};
 };
