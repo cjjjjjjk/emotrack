@@ -13,7 +13,8 @@
 #include "model/SocialForce.h"
 #include "constant/Constant.h"
 #include "renderer/Renderer.h"
-#include "ward/Ward.h"       
+#include "ward/Ward.h"      
+#include "mainHandle/myApp.hpp" 
 #
 
 using namespace std;
@@ -32,7 +33,7 @@ int startTime = 0;
 bool animate = false; // Animate scene flag
 float speedConsiderAsStop = 0.2;
 
-json inputData;
+
 std::map<std::string, std::vector<float>> mapData;
 std::vector<json> juncDataList;
 std::vector<float> juncData;
@@ -52,6 +53,8 @@ int threshold = 0;
 #define TOPLEFT_Y 11
 // Room list
 std::vector<std::shared_ptr<Ward>> room_list;
+// Pendestrian list
+std::vector<std::shared_ptr<Pendestrian>> pedestrian_list;
 
 // Function Prototypes
 void init();
@@ -107,8 +110,12 @@ int main(int argc, char **argv)
     }
     // ============================================================
 
+    // Create pedestrian arr ================= author: Hai ========
+    // Xây dựng mảng các người đi bộ (pedestrian)
+    CreatePedestrian_list(pedestrian_list, 50);
+    
 
-
+    // ============================================================
     std::string input1;
     if ((int)inputData["runMode"]["value"] == 0)
     {

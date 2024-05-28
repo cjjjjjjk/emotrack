@@ -305,8 +305,7 @@ std::vector<double> Utility::getPedesVelocityBasedDDis(json inputData,
 
     const int nrolls = 10000; // number of experiments
     const int numPedes =
-        int(int(inputData["numOfAgents"]["value"]) *
-            deviationParam); // maximum number of pedes to distribute
+        int(int(inputData["numOfAgents"]["value"])); // maximum number of pedes to distribute
 
     std::default_random_engine generator;
     std::discrete_distribution<int> distribution{perNoDisabilityWithoutOvertaking,

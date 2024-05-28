@@ -9,6 +9,11 @@ SocialForce::~SocialForce()
     removeAGVs();
 }
 
+void SocialForce::addPedestrian(std::shared_ptr<Pendestrian> pendes)
+{
+    Pendestrian_list.push_back(pendes);
+}
+
 void SocialForce::addAgent(Agent *agent) { crowd.push_back(agent); }
 
 void SocialForce::addWall(Wall *wall) { walls.push_back(wall); }
