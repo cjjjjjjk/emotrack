@@ -3,7 +3,7 @@
 #include <vector>
 #include <memory>
 #include <vector>
-#include "../ward/Ward.h"
+#include "src/ward/Ward.h"
 // Author: HAI =========================================
 enum Walkability {
     noDisability, 
