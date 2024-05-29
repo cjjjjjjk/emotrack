@@ -153,15 +153,85 @@ void SetPedesJourney(std::vector<std::shared_ptr<Pendestrian>> &pedestrian_list,
     std::cout<<"triple : "<<triple<<"  single:  "<<single<<"\n";
     std::vector<std::pair<std::shared_ptr<Ward>, int>> pair_list = Create_pairWard_list(Ward_list, triple, single); 
 
+    int sizeofPairlist = pair_list.size();
     // Hiện để kiểm tra thông tin ----------
     std::shared_ptr<Ward> ward;
-    for(int i = 0;  i < pair_list.size(); i++ )
+    for(int i = 0;  i < sizeofPairlist; i++ )
     {
         ward = pair_list[i].first;
         std::cout<<"Room: "<<ward->GetID()<<" repeat: "<<pair_list[i].second<<"\n";
     }
     //--------------------------------------
 
-    
+    // CHat GPT 
+    std::unordered_map<char, int> ward_count;
+    for (const auto& pair : pair_list) {
+        ward_count[pair.first->GetID()] = pair.second;
+    }
 
+    // Hàm để lấy ký tự từ từ điển với số lần xuất hiện còn lại lớn nhất
+    auto getMaxWard = [&](int n) -> std::vector<char> {
+        std::vector<std::pair<char, int>> sorted_wards(ward_count.begin(), ward_count.end());
+        std::sort(sorted_wards.begin(), sorted_wards.end(), [](const std::pair<char, int>& a, const std::pair<char, int>& b) {
+            return a.second > b.second;
+        });
+
+        std::vector<char> result;
+        for (int i = 0; i < n && i < sorted_wards.size(); ++i) {
+            result.push_back(sorted_wards[i].first);
+        }
+        return result;
+    };
+
+    // Gán journey cho từng pedestrian
+    for (std::shared_ptr<Pendestrian> &pedestrian : pedestrian_list) {
+        if (pedestrian->GetPedesType() == PedesType::visitor) {
+            // Loại pedestrian nhận 1 Ward
+            std::vector<char> maxWard = getMaxWard(1);
+            if (!maxWard.empty()) {
+                // pedestrian.journey.push_back(Ward(maxWard[0]));
+                bool isAdded = false;
+                if(!isAdded)for(auto ward : Ward_list) if(ward->GetID() == maxWard[0])
+                {
+                    pedestrian->addWard(ward);
+                    isAdded = true;
+                }
+                ward_count[maxWard[0]]--;
+                if (ward_count[maxWard[0]] == 0) {
+                    ward_count.erase(maxWard[0]);
+                }
+            }
+        } else {
+            // Loại pedestrian nhận 3 Ward
+            std::vector<char> maxWards = getMaxWard(3);
+            for (char id : maxWards) {
+                for(auto ward : Ward_list) if(ward->GetID() == id)pedestrian->addWard(ward);
+                ward_count[id]--;
+                if (ward_count[id] == 0) {
+                    ward_count.erase(id);
+                }
+            }
+        }
+    }
+
+    // Kiểm tra xem tất cả các ký tự trong từ điển đã được sử dụng hết chưa
+    for (const auto& count : ward_count) {
+        if (count.second != 0) {
+            std::cerr << "Error: Not all wards have been fully assigned!" << std::endl;
+        }
+    }
+
+    // test infor ---------------------------------
+    // std::cout<<"\n====================\n";
+    // for(int i = 0; i<= 10; i++){
+    // std::string type;
+    // if(pedestrian_list[i]->GetPedesType() == PedesType::patient) type = "Patient ";
+    // else if(pedestrian_list[i]->GetPedesType() == PedesType::personel) type = "Personel ";
+    // else if(pedestrian_list[i]->GetPedesType() == PedesType::visitor) type = "Visitor ";
+    //     std::cout<<pedestrian_list[i]->GetID()<<" \t"<<"type:"<<type<<"\t";
+    //     std::vector<std::shared_ptr<Ward>> jouney_test = pedestrian_list[i]->getJourney();
+    //     for(auto ward : jouney_test) std:cout<<ward->GetID()<<" ";
+    //     std::cout<<"\n----------------\n";
+    // }
+    // -------------------------------------------------
 }
