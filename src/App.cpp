@@ -146,8 +146,8 @@ int main(int argc, char **argv)
 
 
 
-
-
+//hide Main program ================= line 150 - 227 
+{
     std::string input1;
     if ((int)inputData["runMode"]["value"] == 0)
     {
@@ -224,7 +224,7 @@ int main(int argc, char **argv)
     glutKeyboardFunc(normalKey);
     glutIdleFunc(update); // Continuously execute 'update()'
     glutMainLoop();       // Enter GLUT's main loop
-
+}
     return 0;
 }
 
@@ -744,6 +744,7 @@ void display()
     glScalef(1.0, 1.0, 1.0);
 
     drawAgents(socialForce);
+    // drawPedestrian(socialForce);
     drawAGVs(socialForce, juncData, (int)inputData["runConcurrently"]["value"], (int)inputData["runMode"]["value"]);
     drawWalls(socialForce);
     glPopMatrix();
