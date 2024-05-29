@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include "src/ward/Ward.h"
+#include "src/wall/Wall.h"
 #include "src/object/MovingObject.h"
 // Author: HAI =========================================
 enum Walkability {
@@ -34,6 +35,8 @@ private:
 
     std::vector<std::shared_ptr<Ward>> journey; 
     
+    // for rendering
+    float radius;
 
 public:
     Pendestrian() : start(nullptr), end(nullptr), journey({}) {
@@ -64,5 +67,15 @@ public:
     std::shared_ptr<Ward> getStartWard() {return start;};
     std::shared_ptr<Ward> getEndWard() {return end;};
     std::vector<std::shared_ptr<Ward>> getJourney() {return journey;};
+
+    // Radius
+    void setRadius(float radius);
+    float getRadius() const { return radius; }
+
+    // Vector3f
+    Vector3f getDrivingForce(const Point3f destination);
+    Vector3f getAgentInteractForce(std::vector<std::shared_ptr<Pendestrian>> pedesntrian_list);
+    Vector3f getWallInteractForce(std::vector<Wall *> walls);
+    // Vector3f getAgvInteractForce(std::vector<AGV *> agvs);
 
 };
