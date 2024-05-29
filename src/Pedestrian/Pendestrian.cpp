@@ -135,3 +135,28 @@ Vector3f Pendestrian::getWallInteractForce(std::vector<Wall *> walls)
 // {
 //     return Vector3f();
 // }
+void Pendestrian::move(std::vector<std::shared_ptr<Pendestrian>> pedes_list, std::vector<Wall *> walls, float stepTime)
+{
+    Vector3f acceleration;
+
+    // Compute Social Force
+    acceleration = getDrivingForce(getPath()) +
+                   getAgentInteractForce(pedes_list) +
+                   getWallInteractForce(walls);
+                   //+getAgvInteractForce(agvs);
+
+    // std::cout<<"AGV vector3f: "<<getAgvInteractForce(agvs)<<"\n";
+    // Compute New Velocity
+    velocity = velocity + acceleration * stepTime;
+
+    // Truncate Velocity if Exceed Maximum Speed (Magnitude)
+    if (velocity.lengthSquared() > (desiredSpeed * desiredSpeed))
+    {
+        velocity.normalize();
+        velocity *= desiredSpeed;
+    }
+
+    // Compute New Position
+    position = position + velocity * stepTime;
+}
+

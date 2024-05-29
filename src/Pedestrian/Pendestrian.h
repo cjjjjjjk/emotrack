@@ -80,4 +80,5 @@ public:
     Vector3f getWallInteractForce(std::vector<Wall *> walls);
     // Vector3f getAgvInteractForce(std::vector<AGV *> agvs);
 
+    void move(std::vector<std::shared_ptr<Pendestrian>> pedes_list, std::vector<Wall *> walls, float stepTime); // add AGVs
 };
