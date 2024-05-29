@@ -24,6 +24,10 @@ public:
     // Danh sach nguoi di bo ----------------------- author: Hai
     void addPedestrian(std::shared_ptr<Pendestrian> pendes);
     int GetPes_listSize(){return Pendestrian_list.size();};
+    void removePedes(int pedesID);
+    void removePedeslist();
+    // Pedestrian move
+    
     // ---------------------------------------------------------
     void addAgent(Agent *agent);
 
