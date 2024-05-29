@@ -25,7 +25,7 @@ private:
     int ID; 
     double age;
     PedesType type;
-    double velocity;
+    double v;
     double walkingTime;
     double distance;
     // Ward start;
@@ -43,16 +43,18 @@ public:
         std::cout<<" Create a pedestrian ! \n";
     };
     Pendestrian(int ID, double age) : ID(ID), age(age) {};
-    Pendestrian(int ID, int age, int velocity, int walkingTime, int distace, std::shared_ptr<Ward> start, std::shared_ptr<Ward> end) : 
-    ID(ID), age(age), velocity(velocity), walkingTime(walkingTime), distance(distace), start(start), end(end)
-    {};
+    Pendestrian(int ID, int age, float velocity, int walkingTime, int distace, std::shared_ptr<Ward> start, std::shared_ptr<Ward> end) : 
+    ID(ID), age(age), walkingTime(walkingTime), distance(distace), start(start), end(end)
+    {
+        this->setDesiredSpeed(velocity);
+    };
 
     virtual ~Pendestrian() = default;
 
     void SetType(PedesType type) {this->type = type;};
     void SetID(int id){ID = id;};
     void SetAge(double ag) {age = ag;};
-    void SetVelocity(double v) {velocity = v;};
+    void SetVelocity(float v) {this->v = v; this->setDesiredSpeed(v);};
     void SetDistance(double dis) {distance = dis;};
     void SetWalkingTime(double time) {walkingTime = time;};
     void SetStartWard(std::shared_ptr<Ward> ward) {start = ward;};
@@ -63,7 +65,7 @@ public:
     int GetID() {return this->ID;};
     double GetAge() { return this->age;};
     PedesType GetPedesType(){return type;};
-    double GetVelo() {return this->velocity;};
+    double GetVelo() {return this->v;};
     std::shared_ptr<Ward> getStartWard() {return start;};
     std::shared_ptr<Ward> getEndWard() {return end;};
     std::vector<std::shared_ptr<Ward>> getJourney() {return journey;};
