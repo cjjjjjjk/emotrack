@@ -4,6 +4,7 @@ using namespace std;
 
 SocialForce::~SocialForce()
 {
+    removePedeslist();
     removeCrowd();
     removeWalls();
     removeAGVs();
@@ -12,6 +13,20 @@ SocialForce::~SocialForce()
 void SocialForce::addPedestrian(std::shared_ptr<Pendestrian> pendes)
 {
     Pendestrian_list.push_back(pendes);
+}
+
+void SocialForce::removePedes(int pedesID)
+{
+    if (!Pendestrian_list.empty())
+    {
+        Pendestrian_list.erase(remove_if(begin(Pendestrian_list), end(Pendestrian_list), [pedesID](std::shared_ptr<Pendestrian> pedes)
+                              { return pedes->getId() == pedesID; }),end(Pendestrian_list));
+    }
+}
+
+void SocialForce::removePedeslist()
+{
+    Pendestrian_list.clear();
 }
 
 void SocialForce::addAgent(Agent *agent) { crowd.push_back(agent); }

@@ -18,7 +18,6 @@ public:
     Walkability GetWalkability(){return this->walkability;};
 
 
-    void GetType() override {std::cout<<"A Visitor ! ";};
 };
 
 Visitor ::Visitor ()

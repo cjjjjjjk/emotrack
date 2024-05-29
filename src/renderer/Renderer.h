@@ -19,7 +19,7 @@ using namespace Utility;
 namespace Renderer
 {
     void drawAgents(SocialForce *socialForce);
-
+    void drawPedestrian(SocialForce *socialForce);
     void drawAGVs(
         SocialForce *socialForce,
         std::vector<float> juncData,

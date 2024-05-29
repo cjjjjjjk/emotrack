@@ -17,6 +17,26 @@ void Renderer::drawAgents(SocialForce *socialForce)
     }
 }
 
+
+
+// --------------------------------------------- DRAW PEDESTRIAN
+void Renderer::drawPedestrian(SocialForce *socialForce)
+{
+    vector<shared_ptr<Pendestrian>> pedes_list = socialForce->getPedes_list();
+
+    for (std::shared_ptr<Pendestrian> pedes : pedes_list)
+    {
+        // Draw Agents
+        glColor3f(pedes->getColor().x, pedes->getColor().y, pedes->getColor().z);
+        drawCylinder(
+            pedes->getPosition().x, pedes->getPosition().y,
+            pedes->getRadius(), 15, 0.0);
+    }
+}
+// -------------------------------------------------------------
+
+
+
 void Renderer::drawAGVs(
     SocialForce *socialForce,
     std::vector<float> juncData,
