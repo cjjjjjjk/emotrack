@@ -125,8 +125,7 @@ int main(int argc, char **argv)
     CreatePedestrian_list(pedestrian_list, 50);
     SetPedesJourney(pedestrian_list, room_list);
     socialForce->SetPedeslist(pedestrian_list);
-    std::cout<<socialForce->GetPes_listSize()<<"pedeslistSize \n";
-    // Test thong tin pedestrian =============================================RUN-> ERROR: Core dumped
+    // // Test thong tin pedestrian =============================================RUN-> ERROR: Core dumped
     // std::cout<<"Number of pedestrians: "<<pedestrian_list.size()<<"\n===================================\n";
     // for(long unsigned int i = 0; i<= pedestrian_list.size(); i++)
     // {
@@ -136,6 +135,8 @@ int main(int argc, char **argv)
     // else if(pedestrian_list[i]->GetPedesType() == PedesType::visitor) type = "Visitor ";
     // std::cout<<"ID : "<<pedestrian_list[i]->GetID()<<"   \t- "<<type<<'\n';
     // std::cout<<"Age: "<<pedestrian_list[i]->GetAge()<<"   \t- V: "<<pedestrian_list[i]->GetVelo()<<"\n";
+    // pedestrian_list[i]->setPosition(Point3f(4, 4, 0));
+    // std::cout<<"Position : "<<pedestrian_list[i]->getPosition().x<<" \t"<<pedestrian_list[i]->getPosition().y<<"\n";
     // std::cout<<"===================================\n";
     // }
     // ===============================================================================================

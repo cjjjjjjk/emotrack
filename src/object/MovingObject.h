@@ -33,8 +33,8 @@ public:
 
     void setColor(float red, float green, float blue);
 
-    Point3f getPosition() const { return position; }
-
+    Point3f getPosition() const { return this->position; }
+    void setPosition(Point3f pos) {this->position = pos;};
     void setPosition(float x, float y);
 
     Point3f getPath();

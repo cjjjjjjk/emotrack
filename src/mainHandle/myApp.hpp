@@ -23,7 +23,7 @@ int checkType(double age, double v) // 1-Personel  2-Patient 3-Visitor
     if(age > 80 || v < 0.7) return 2;
     return 3;
 }
-
+std::vector<Point3f> CreateRandomPosition(int M = 50);
 
 void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian_list, int M = 50)
 {
@@ -42,6 +42,9 @@ void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian
 
     // Vector van toc ======
     float deviationParam = randomFloat(1 - (float)inputData["experimentalDeviation"]["value"] / 100, 1 + (float)inputData["experimentalDeviation"]["value"] / 100);
+    // Vecto toa do
+    std::vector<Point3f> position_list = CreateRandomPosition();
+    
     // cout << "Deviation: "<< deviationParam <<" - Num agents: "<< int(int(inputData["numOfAgents"]["value"]) * deviationParam) << endl;
     vector<double> velocityList = Utility::getPedesVelocity(0, inputData, deviationParam);
     std::cout<<deviationParam<<" "<<velocityList.size()<<"\n";
@@ -64,8 +67,9 @@ void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian
                     std::shared_ptr<Personel> personel = std::make_shared<Personel>(IDcount, age);
                     numberOfPersonel++;
                     // Xay dung cac gia tri con lai
-
+                    personel->setPosition(position_list[i]);
                     personel->SetVelocity(v);
+                    personel->setColor(133.0, 22.0, 255.0);
                     personel->SetType(PedesType::personel);
                     // Them doi tuong vao mang
                     pedestrian_list.push_back(personel);
@@ -75,6 +79,8 @@ void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian
                     numberOfVisitor++;
                     visitor->SetType(PedesType::visitor);
                     visitor->SetVelocity(v);
+                    visitor->setColor(0.0, 128.0, 0.0);
+                    visitor->setPosition(position_list[i]);
                     pedestrian_list.push_back(visitor);
                 }
         } else if(checkType(age, v) == 2) // patient
@@ -84,6 +90,8 @@ void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian
             patient->SetWalkability(Walkability::crutches);
             patient->SetType(PedesType::patient);
             patient->SetVelocity(v);
+            patient->setColor(216.0, 32.0, 42.0);
+            patient->setPosition(position_list[i]);
             pedestrian_list.push_back(patient);
         } else
         {
@@ -92,6 +100,8 @@ void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian
             numberOfVisitor++;
             visitor->SetType(PedesType::visitor);
             visitor->SetVelocity(v);
+            visitor->setColor(0.0, 128.0, 0.0);
+            visitor->setPosition(position_list[i]);
             pedestrian_list.push_back(visitor);
         }
     }
@@ -99,6 +109,33 @@ void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian
     std::cout<<"Personel: "<<numberOfPersonel<<"\n";
     std::cout<<"Visitor : "<<numberOfVisitor<<"\n";
     std::cout<<"Patient : "<<numberOfPatient<<"\n";
+}
+
+// Hàm sinh ra mảng tọa độ bất kỳ
+std::vector<Point3f> CreateRandomPosition(int M) {
+    // Đặt giới hạn cho tọa độ x và y dựa trên tọa độ các góc của căn phòng
+    double x_min = -19.8;
+    double x_max = 19.8;
+    double y_min = -10.8;
+    double y_max = 10.8;
+
+    std::vector<Point3f> points;
+    points.reserve(M); // Dự trữ không gian cho M phần tử
+
+    // Khởi tạo seed cho hàm rand()
+    std::srand(std::time(0));
+
+    for (int i = 0; i < M; ++i) {
+        Point3f p;
+        // Tạo giá trị ngẫu nhiên cho x trong khoảng [x_min, x_max]
+        p.x = x_min + static_cast<double>(rand()) / (static_cast<double>(RAND_MAX / (x_max - x_min)));
+        // Tạo giá trị ngẫu nhiên cho y trong khoảng [y_min, y_max]
+        p.y = y_min + static_cast<double>(rand()) / (static_cast<double>(RAND_MAX / (y_max - y_min)));
+        p.z = 0.0;
+        // Thêm điểm vào vector
+        points.push_back(p);
+    }
+    return points;
 }
 
 

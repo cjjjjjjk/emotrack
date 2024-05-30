@@ -27,10 +27,14 @@ void Renderer::drawPedestrian(SocialForce *socialForce)
     for (std::shared_ptr<Pendestrian> pedes : pedes_list)
     {
         // Draw Agents
+        // std::cout<<"\n"<<pedes->getPosition().x<<"\t "<< pedes->getPosition().y;
         glColor3f(pedes->getColor().x, pedes->getColor().y, pedes->getColor().z);
         drawCylinder(
             pedes->getPosition().x, pedes->getPosition().y,
-            pedes->getRadius(), 15, 0.0);
+            // 4,10,
+            pedes->getRadius()
+            // 0.2
+            , 15, 0.0);
     }
 }
 // -------------------------------------------------------------
