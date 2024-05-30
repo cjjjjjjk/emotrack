@@ -24,6 +24,7 @@ public:
     // Danh sach nguoi di bo ----------------------- author: Hai
     void addPedestrian(std::shared_ptr<Pendestrian> pendes);
     int GetPes_listSize(){return Pendestrian_list.size();};
+    void SetPedeslist(std::vector<std::shared_ptr<Pendestrian> > list){Pendestrian_list = list; };
     std::vector<std::shared_ptr<Pendestrian> > getPedes_list() {return Pendestrian_list;};
     void removePedes(int pedesID);
     void removePedeslist();

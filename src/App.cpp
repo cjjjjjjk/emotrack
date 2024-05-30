@@ -77,6 +77,7 @@ int main(int argc, char **argv)
 {
     inputData = Utility::readInputData("data/input.json");
     mapData = Utility::readMapData("data/map.txt");
+    socialForce = new SocialForce;
 
 
 
@@ -123,8 +124,8 @@ int main(int argc, char **argv)
     // Xây dựng mảng các người đi bộ (pedestrian)
     CreatePedestrian_list(pedestrian_list, 50);
     SetPedesJourney(pedestrian_list, room_list);
-    
-    // Test thong tin pedestrian =============================================RUN-> ERROR: Core dumped
+    socialForce->SetPedeslist(pedestrian_list);
+    // // Test thong tin pedestrian =============================================RUN-> ERROR: Core dumped
     // std::cout<<"Number of pedestrians: "<<pedestrian_list.size()<<"\n===================================\n";
     // for(long unsigned int i = 0; i<= pedestrian_list.size(); i++)
     // {
@@ -134,6 +135,8 @@ int main(int argc, char **argv)
     // else if(pedestrian_list[i]->GetPedesType() == PedesType::visitor) type = "Visitor ";
     // std::cout<<"ID : "<<pedestrian_list[i]->GetID()<<"   \t- "<<type<<'\n';
     // std::cout<<"Age: "<<pedestrian_list[i]->GetAge()<<"   \t- V: "<<pedestrian_list[i]->GetVelo()<<"\n";
+    // pedestrian_list[i]->setPosition(Point3f(4, 4, 0));
+    // std::cout<<"Position : "<<pedestrian_list[i]->getPosition().x<<" \t"<<pedestrian_list[i]->getPosition().y<<"\n";
     // std::cout<<"===================================\n";
     // }
     // ===============================================================================================
@@ -269,7 +272,6 @@ void init()
 
     srand(1604010629); // Seed to generate random numbers
 
-    socialForce = new SocialForce;
     createWalls();
     createAgents();
     createAGVs();
@@ -989,6 +991,7 @@ void update()
 
     if (animate)
     {
+        
         socialForce->moveCrowd(static_cast<float>(frameTime) / 1000); // Perform calculations and move agents
         socialForce->moveAGVs(static_cast<float>(frameTime) / 1000);
     }

@@ -36,7 +36,7 @@ private:
     std::vector<std::shared_ptr<Ward>> journey; 
     
     // for rendering
-    float radius;
+    float radius = 0.2;
 
 public:
     Pendestrian() : start(nullptr), end(nullptr), journey({}) {
