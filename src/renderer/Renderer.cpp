@@ -358,17 +358,17 @@ void Renderer::showInformation(
     }
     else
     {
-        drawSquare(margin.x, -margin.y + 2.2, 0.3, GREEN);
+        drawSquare(margin.x+ 38.5, -margin.y + 6.0 + 2.2, 0.3, GREEN);
         glColor3f(0.0, 0.0, 0.0);
-        drawText(margin.x + 0.5, -margin.y + 2, "Hospital staff");
+        drawText(margin.x+ 39, -margin.y + 6.0 + 2, "Visitor");
 
-        drawSquare(margin.x, -margin.y + 1.2, 0.3, BLACK);
+        drawSquare(margin.x + 38.5, -margin.y + 6.0 + 1.2, 0.3, PURPLE);
         glColor3f(0.0, 0.0, 0.0);
-        drawText(margin.x + 0.5, -margin.y + 1, "Patients' relatives");
+        drawText(margin.x+ 39, -margin.y + 6.0 + 1, "Personel");
 
-        drawSquare(margin.x, -margin.y + 0.2, 0.3, RED);
+        drawSquare(margin.x + 38.5, -margin.y + 6.0 + 0.2, 0.3, RED);
         glColor3f(0.0, 0.0, 0.0);
-        drawText(margin.x + 0.5, -margin.y, "Patient");
+        drawText(margin.x+ 39, -margin.y + 6.0, "Patient");
     }
 }
 
