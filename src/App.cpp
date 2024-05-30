@@ -77,6 +77,7 @@ int main(int argc, char **argv)
 {
     inputData = Utility::readInputData("data/input.json");
     mapData = Utility::readMapData("data/map.txt");
+    socialForce = new SocialForce;
 
 
 
@@ -123,7 +124,8 @@ int main(int argc, char **argv)
     // Xây dựng mảng các người đi bộ (pedestrian)
     CreatePedestrian_list(pedestrian_list, 50);
     SetPedesJourney(pedestrian_list, room_list);
-    
+    socialForce->SetPedeslist(pedestrian_list);
+    std::cout<<socialForce->GetPes_listSize()<<"pedeslistSize \n";
     // Test thong tin pedestrian =============================================RUN-> ERROR: Core dumped
     // std::cout<<"Number of pedestrians: "<<pedestrian_list.size()<<"\n===================================\n";
     // for(long unsigned int i = 0; i<= pedestrian_list.size(); i++)
@@ -269,7 +271,6 @@ void init()
 
     srand(1604010629); // Seed to generate random numbers
 
-    socialForce = new SocialForce;
     createWalls();
     createAgents();
     createAGVs();
@@ -932,6 +933,7 @@ void update()
 
     if (animate)
     {
+        
         socialForce->moveCrowd(static_cast<float>(frameTime) / 1000); // Perform calculations and move agents
         socialForce->moveAGVs(static_cast<float>(frameTime) / 1000);
     }
