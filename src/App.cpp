@@ -745,8 +745,8 @@ void display()
     glPushMatrix();
     glScalef(1.0, 1.0, 1.0);
 
-    drawAgents(socialForce);
-    // drawPedestrian(socialForce);
+    // drawAgents(socialForce);
+    drawPedestrian(socialForce);
     drawAGVs(socialForce, juncData, (int)inputData["runConcurrently"]["value"], (int)inputData["runMode"]["value"]);
     drawWalls(socialForce);
     glPopMatrix();
