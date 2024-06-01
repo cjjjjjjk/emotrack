@@ -800,6 +800,21 @@ void update()
     prevTime = currTime;
 
     int count_agents = 0, count_agvs = 0;
+    // Update Pedestrian --------------------------------
+    //==========================================================================================
+    // Testing
+    
+    auto pedeslist = socialForce->getPedes_list();
+    auto pedes = pedeslist[0];
+    Point3f pos = pedes->getPosition();
+    pos.x += 0.004;
+    pos.y += 0.004;
+    pedes->setPosition(pos);
+    
+    // std::cout<<"TEST: "<<pedes->getVelocity().x<<" "<<pedes->getVelocity().y<<"\n";
+
+    // -----------------------------------------------------------------------------------------
+    // =========================================================================================
 
     std::vector<Agent *> agents = socialForce->getCrowd();
     for (Agent *agent : agents)
