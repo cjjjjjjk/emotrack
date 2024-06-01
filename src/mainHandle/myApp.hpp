@@ -258,6 +258,11 @@ void SetPedesJourney(std::vector<std::shared_ptr<Pendestrian>> &pedestrian_list,
         }
     }
 
+    // Thiet lap start ward cho cac pedestrian
+    for(auto pedes : pedestrian_list)
+    {
+        pedes->SetStartWard(pedes->getJourney()[0]);
+    }
     // test infor ---------------------------------
     // std::cout<<"\n====================\n";
     // for(int i = 0; i<= 10; i++){
