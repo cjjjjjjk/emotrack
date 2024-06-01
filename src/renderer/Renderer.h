@@ -11,6 +11,7 @@
 #include "src/model/SocialForce.h"
 #include "src/constant/Constant.h"
 #include "src/utility/Utility.h"
+#include "src/ward/Ward.h"
 
 using namespace Constant;
 using namespace Utility;

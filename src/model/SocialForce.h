@@ -13,6 +13,7 @@
 class SocialForce {
 private:
     std::vector<std::shared_ptr<Pendestrian> > Pendestrian_list;
+    std::vector<std::shared_ptr<Ward>> Ward_list;
     std::vector<Agent *> crowd;
     std::vector<Wall *> walls;
     std::vector<AGV *> agvs;
@@ -29,8 +30,11 @@ public:
     void removePedes(int pedesID);
     void removePedeslist();
     // Pedestrian move
-    
     // ---------------------------------------------------------
+    // Ward list -----------------------------------------------
+    void setWard_list(std::vector<std::shared_ptr<Ward>> wardList) { this->Ward_list = wardList;};
+    std::vector<std::shared_ptr<Ward>> GetWard_list() {return Ward_list;};
+    //----------------------------------------------------------
     void addAgent(Agent *agent);
 
     void addWall(Wall *wall);
