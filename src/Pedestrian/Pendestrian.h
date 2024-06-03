@@ -74,6 +74,7 @@ public:
     void setRadius(float radius);
     float getRadius() const { return radius; }
 
+    float getMinDistanceToWalls(std::vector<Wall *> walls, Point3f position, float radius);
     // Vector3f
     Vector3f getDrivingForce(const Point3f destination);
     Vector3f getAgentInteractForce(std::vector<std::shared_ptr<Pendestrian>> pedesntrian_list);

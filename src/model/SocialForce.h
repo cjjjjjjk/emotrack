@@ -61,7 +61,7 @@ public:
     void removeAGVs();
 
     void moveCrowd(float stepTime);
-
+    void movePedes(float stepTime);
     void moveAGVs(float stepTime);
 };
 

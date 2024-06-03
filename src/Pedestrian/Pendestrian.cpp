@@ -1,5 +1,27 @@
 #include "Pendestrian.h"
 
+float Pendestrian::getMinDistanceToWalls(std::vector<Wall*>walls, Point3f position, float radius)
+{
+    Point3f nearestPoint;
+    Vector3f vector;
+    float distanceSquared, minDistanceSquared = INFINITY;
+
+    for (auto wall : walls)
+    {
+        nearestPoint = wall->getNearestPoint(position);
+        vector = position - nearestPoint; // Vector from wall to agent i
+        distanceSquared = vector.lengthSquared();
+
+        // Store Nearest Wall Distance
+        if (distanceSquared < minDistanceSquared)
+        {
+            minDistanceSquared = distanceSquared;
+        }
+    }
+
+    return sqrt(minDistanceSquared) - radius; // Distance between wall and agent i
+}
+
 Vector3f Pendestrian::getDrivingForce(const Point3f destination)
 {
     const float T = 0.54F; // Relaxation time based on (Moussaid et al., 2009)
@@ -148,7 +170,7 @@ void Pendestrian::move(std::vector<std::shared_ptr<Pendestrian>> pedes_list, std
     // std::cout<<"AGV vector3f: "<<getAgvInteractForce(agvs)<<"\n";
     // Compute New Velocity
     velocity = velocity + acceleration * stepTime;
-
+    // std::cout<<ID<<"\t"<<velocity<<"\n";
     // Truncate Velocity if Exceed Maximum Speed (Magnitude)
     if (velocity.lengthSquared() > (desiredSpeed * desiredSpeed))
     {

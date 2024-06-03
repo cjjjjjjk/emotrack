@@ -126,6 +126,12 @@ int main(int argc, char **argv)
     CreatePedestrian_list(pedestrian_list, 50);
     SetPedesJourney(pedestrian_list, room_list);
     socialForce->SetPedeslist(pedestrian_list);
+    SetPedesDestination(pedestrian_list);
+
+    for(auto pedes : pedestrian_list)
+    {
+        std::cout<<"App line 133: ID "<<pedes->GetID()<<"\t"<<"POs: "<<pedes->getPosition()<<"    \tVelo: "<<pedes->getVelocity()<<"\tdes: "<<pedes->getDestination()<<"\n";
+    }
     // // Test thong tin pedestrian =============================================RUN-> ERROR: Core dumped
     // std::cout<<"Number of pedestrians: "<<pedestrian_list.size()<<"\n===================================\n";
     // for(long unsigned int i = 0; i<= pedestrian_list.size(); i++)
@@ -805,15 +811,61 @@ void update()
     //==========================================================================================
     // Testing
     
-    auto pedeslist = socialForce->getPedes_list();
-    auto pedes = pedeslist[0];
-    Point3f pos = pedes->getPosition();
-    pos.x += 0.004;
-    pos.y += 0.004;
-    pedes->setPosition(pos);
+    // auto pedeslist = socialForce->getPedes_list();
+    // auto pedes = pedeslist[0];
+    // Point3f pos = pedes->getPosition();
+    // pos.x += 0.004;
+    // pos.y += 0.004;
+    // pedes->setPosition(pos);
     
     // std::cout<<"TEST: "<<pedes->getVelocity().x<<" "<<pedes->getVelocity().y<<"\n";
+    // std::vector<std::shared_ptr<Pendestrian>> pedes_list = socialForce->getPedes_list(); 
+    
 
+    for (std::shared_ptr<Pendestrian> pedes : pedestrian_list)
+    {
+        Point3f src = pedes->getPosition();
+        Point3f des = pedes->getDestination();
+
+        if (Utility::isPositionErr(src, walkwayWidth, juncData.size(), socialForce->getAGVs()))
+        {
+            socialForce->removeAgent(pedes->GetID());
+            continue;
+        }
+
+        if (pedes->getVelocity().length() < LOWER_SPEED_LIMIT + 0.2 &&
+            pedes->getMinDistanceToWalls(socialForce->getWalls(), src, pedes->getRadius()) < 0.2 
+            // && (pedes->interDes).size() == 0
+            )
+        {
+            Point3f intermediateDes = Utility::getIntermediateDes(src, walkwayWidth, walkwayWidth);
+
+            // (pedes->interDes).push_back(intermediateDes);
+            pedes->setPath(intermediateDes.x, intermediateDes.y, 1.0);
+            pedes->setPath(des.x, des.y, 1.0);
+        }
+
+        // if ((pedes->interDes).size() > 0)
+        // {
+        //     float distanceToInterDes = src.distance((pedes->interDes).front());
+        //     if (distanceToInterDes <= 1)
+        //     {
+        //         (pedes->interDes).clear();
+        //     }
+        // }
+
+        float distanceToTarget = src.distance(des);
+        if (distanceToTarget <= 1 || isnan(distanceToTarget))
+        {
+            pedes->setIsMoving(false);
+            // if (!pedes->getStopAtCorridor())
+            // {
+            //     socialForce->removeAgent(pedes->getId());
+            // }
+            count_agents = count_agents + 1;
+        }
+    }
+    
     // -----------------------------------------------------------------------------------------
     // =========================================================================================
 
@@ -950,7 +1002,7 @@ void update()
 
     if (animate)
     {
-        
+        // socialForce->movePedes(static_cast<float>(frameTime) / 1000);
         socialForce->moveCrowd(static_cast<float>(frameTime) / 1000); // Perform calculations and move agents
         socialForce->moveAGVs(static_cast<float>(frameTime) / 1000);
     }
