@@ -23,7 +23,27 @@ int checkType(double age, double v) // 1-Personel  2-Patient 3-Visitor
     if(age > 80 || v < 0.7) return 2;
     return 3;
 }
+// Tạo tọa độ bất kỳ cho một pedés trong bệnh viện.
 std::vector<Point3f> CreateRandomPosition(int M = 50);
+// Lấy một tọa độ bất kỳ trong 1 Ward (Xây dụng điểm đến cho một pedestrian)
+Point3f GetWardRandomPosition(std::shared_ptr<Ward> ward)
+{
+    double x_min = ward->GetGate1_x() - ward->GetLength()/2 + 1.0 ;
+    double x_max = x_min + ward->GetLength() - 1.0;
+    double y_min = ward->GetGate2_y() + 1.0;
+    double y_max = ward->GetGate1_y() - 1.0;
+
+    // Khởi tạo seed cho hàm rand()
+    std::srand(std::time(0));
+        Point3f p;
+        // Tạo giá trị ngẫu nhiên cho x trong khoảng [x_min, x_max]
+        p.x = x_min + static_cast<double>(rand()) / (static_cast<double>(RAND_MAX / (x_max - x_min)));
+        // Tạo giá trị ngẫu nhiên cho y trong khoảng [y_min, y_max]
+        p.y = y_min + static_cast<double>(rand()) / (static_cast<double>(RAND_MAX / (y_max - y_min)));
+        p.z = 0.0;
+        
+    return p;
+}
 
 void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian_list, int M = 50)
 {
@@ -47,7 +67,6 @@ void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian
     
     // cout << "Deviation: "<< deviationParam <<" - Num agents: "<< int(int(inputData["numOfAgents"]["value"]) * deviationParam) << endl;
     vector<double> velocityList = Utility::getPedesVelocity(0, inputData, deviationParam);
-    std::cout<<deviationParam<<" "<<velocityList.size()<<"\n";
     auto rng = std::default_random_engine{};
     std::shuffle(velocityList.begin(), velocityList.end(), rng);    
     //=================
@@ -105,10 +124,11 @@ void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian
             pedestrian_list.push_back(visitor);
         }
     }
+    std::cout<<"mainHandle line 128 ------\n";
     std::cout<<"Pendestrian: "<<pedestrian_list.size()<<"\n";
     std::cout<<"Personel: "<<numberOfPersonel<<"\n";
     std::cout<<"Visitor : "<<numberOfVisitor<<"\n";
-    std::cout<<"Patient : "<<numberOfPatient<<"\n";
+    std::cout<<"Patient : "<<numberOfPatient<<"\n--------------------------\n";
 }
 
 // Hàm sinh ra mảng tọa độ bất kỳ
@@ -146,7 +166,7 @@ std::vector<std::pair<std::shared_ptr<Ward>, int>>  Create_pairWard_list(std::ve
     int total = triple*3 + single;
     if((triple+single) != numberOfAgent ) 
     {
-        std::cout<<"Gia tri triple va single khong thoa man  ="<<(int)inputData["numOfAgents"]["value"]<<"!  ";
+        std::cout<<"mainHandle line 170: Gia tri triple va single khong thoa man  ="<<(int)inputData["numOfAgents"]["value"]<<"!  ";
         return rs ;
     }
 
@@ -187,7 +207,6 @@ void SetPedesJourney(std::vector<std::shared_ptr<Pendestrian>> &pedestrian_list,
 {
     int single = numberOfVisitor;
     int triple = numberOfAgent - single;
-    std::cout<<"triple : "<<triple<<"  single:  "<<single<<"\n";
     std::vector<std::pair<std::shared_ptr<Ward>, int>> pair_list = Create_pairWard_list(Ward_list, triple, single); 
 
     int sizeofPairlist = pair_list.size();
@@ -196,7 +215,7 @@ void SetPedesJourney(std::vector<std::shared_ptr<Pendestrian>> &pedestrian_list,
     for(int i = 0;  i < sizeofPairlist; i++ )
     {
         ward = pair_list[i].first;
-        std::cout<<"Room: "<<ward->GetID()<<" repeat: "<<pair_list[i].second<<"\n";
+        // std::cout<<"mainHandle line 219: Room: "<<ward->GetID()<<" repeat: "<<pair_list[i].second<<"\n";
     }
     //--------------------------------------
 
@@ -258,6 +277,11 @@ void SetPedesJourney(std::vector<std::shared_ptr<Pendestrian>> &pedestrian_list,
         }
     }
 
+    // Thiet lap start ward cho cac pedestrian
+    for(auto pedes : pedestrian_list)
+    {
+        pedes->SetStartWard(pedes->getJourney()[0]);
+    }
     // test infor ---------------------------------
     // std::cout<<"\n====================\n";
     // for(int i = 0; i<= 10; i++){
@@ -271,4 +295,16 @@ void SetPedesJourney(std::vector<std::shared_ptr<Pendestrian>> &pedestrian_list,
     //     std::cout<<"\n----------------\n";
     // }
     // -------------------------------------------------
+}
+
+
+void SetPedesDestination(std::vector<std::shared_ptr<Pendestrian>> &Pedes_list)
+{
+    for(std::shared_ptr<Pendestrian>  pedes : Pedes_list)
+    {
+        std::shared_ptr<Ward> fWard = pedes->getStartWard();
+        Point3f Destination_position = GetWardRandomPosition(fWard);
+
+        pedes->setDestination(Destination_position.x, Destination_position.y);
+    }
 }

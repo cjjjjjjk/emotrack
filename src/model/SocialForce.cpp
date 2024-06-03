@@ -93,6 +93,18 @@ void SocialForce::moveCrowd(float stepTime)
     }
 }
 
+void SocialForce::movePedes(float stepTime)
+{
+        for (unsigned int idx = 0; idx < Pendestrian_list.size(); idx++)
+    {
+        // if (crowd[idx]->getIsMoving())
+        // {
+        //     crowd[idx]->move(crowd, walls, agvs, stepTime);
+        // }
+        Pendestrian_list[idx]->move(Pendestrian_list, walls, stepTime);
+    }
+}
+
 void SocialForce::moveAGVs(float stepTime)
 {
     vector<Point3f> position_list;

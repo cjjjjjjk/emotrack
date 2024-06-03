@@ -302,6 +302,18 @@ void Renderer::showInformation(
     margin.y = 0;
 
     glColor3f(0.0, 0.0, 0.0);
+    // Ward ID :-----------------------------
+    std::vector<std::shared_ptr<Ward>> Ward_list = socialForce->GetWard_list();
+    
+    for(auto ward : Ward_list)
+    {
+        if(!ward) break;
+        char ch = ward->GetID();  // The character to convert
+        std::string str(1, ch); // Create a string with one occurrence of ch
+        const char* name = str.c_str(); // Get the C-style string
+        drawText(ward->GetGate1_x() - 1.5, ward->GetGate1_y() - 1.0F, name);
+    }
+    //---------------------------------------
 
     // Total Agents
     drawText(margin.x - 2.0F, margin.y +11.0F, "Total agents:");
