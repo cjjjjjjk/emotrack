@@ -199,7 +199,7 @@ int main(int argc, char **argv)
     SetPedesJourney(pedestrian_list, room_list);
     socialForce->SetPedeslist(pedestrian_list);
     // test set pedes path ------------------ Hai
-    setPedesPath(juncData);
+    // setPedesPath(juncData);
     SetPedesDestination(pedestrian_list);
     for(auto pedes : pedestrian_list)
     {
@@ -829,37 +829,33 @@ void update()
 
     for (std::shared_ptr<Pendestrian> pedes : pedestrian_list)
     {
-        Point3f src = pedes->getPosition();
-        Point3f des = pedes->getDestination();
-
-        if (Utility::isPositionErr(src, walkwayWidth, juncData.size(), socialForce->getAGVs()))
+        Point3f curPos = pedes->getPosition();
+        Point3f curDes = pedes->getDestination();
+        if (Utility::isPositionErr(curPos, walkwayWidth, juncData.size(), socialForce->getAGVs()))
         {
-            socialForce->removeAgent(pedes->GetID());
+            socialForce->removePedes(pedes->GetID());
             continue;
         }
-
         if (pedes->getVelocity().length() < LOWER_SPEED_LIMIT + 0.2 &&
-            pedes->getMinDistanceToWalls(socialForce->getWalls(), src, pedes->getRadius()) < 0.2 
+            pedes->getMinDistanceToWalls(socialForce->getWalls(), curPos, pedes->getRadius()) < 0.2 
             // && (pedes->interDes).size() == 0
             )
         {
-            Point3f intermediateDes = Utility::getIntermediateDes(src, walkwayWidth, walkwayWidth);
+            Point3f intermediateDes = Utility::getIntermediateDes(curPos, walkwayWidth, walkwayWidth);
 
             // (pedes->interDes).push_back(intermediateDes);
             pedes->setPath(intermediateDes.x, intermediateDes.y, 1.0);
-            pedes->setPath(des.x, des.y, 1.0);
+            pedes->setPath(curDes.x, curDes.y, 1.0);
         }
-
         // if ((pedes->interDes).size() > 0)
         // {
-        //     float distanceToInterDes = src.distance((pedes->interDes).front());
+        //     float distanceToInterDes = curPos.distance((pedes->interDes).front());
         //     if (distanceToInterDes <= 1)
         //     {
         //         (pedes->interDes).clear();
         //     }
         // }
-
-        float distanceToTarget = src.distance(des);
+        float distanceToTarget = curPos.distance(curDes);
         if (distanceToTarget <= 1 || isnan(distanceToTarget))
         {
             pedes->setIsMoving(false);

@@ -407,6 +407,7 @@ void SetPedesJourney(std::vector<std::shared_ptr<Pendestrian>> &pedestrian_list,
 }
 
 
+// First destination.
 void SetPedesDestination(std::vector<std::shared_ptr<Pendestrian>> &Pedes_list)
 {
     for(std::shared_ptr<Pendestrian>  pedes : Pedes_list)
@@ -415,5 +416,6 @@ void SetPedesDestination(std::vector<std::shared_ptr<Pendestrian>> &Pedes_list)
         Point3f Destination_position = GetWardRandomPosition(fWard);
         // std::cout<<"myAP linr 416 : pos"<<Destination_position<<"\n";
         pedes->setDestination(Destination_position.x, Destination_position.y);
+        pedes->setPath(Destination_position.x, Destination_position.y, pedes->getRadius());
     }
 }

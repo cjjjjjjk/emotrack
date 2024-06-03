@@ -1,1 +1,2 @@
-token: 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
+token: 
+# token là cái thay thế đăng nhập, lúc nhập password thì tự tạo token của mình rồi nhập vào phàn pass là acces được repo. username ntn cũng được. 
