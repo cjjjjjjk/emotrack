@@ -58,7 +58,7 @@ Vector3f Pendestrian::getAgentInteractForce(std::vector<std::shared_ptr<Pendestr
     for (const std::shared_ptr<Pendestrian> &pedes : pedestrian_list)
     {
         // Do Not Compute Interaction Force to Itself
-        if (pedes->GetID() != id)
+        if (pedes->GetID() != ID)
         {
             // Compute Distance Between Agent j and i
             distance_ij = pedes->getPosition() - position;
@@ -166,7 +166,7 @@ void Pendestrian::move(std::vector<std::shared_ptr<Pendestrian>> pedes_list, std
                    getAgentInteractForce(pedes_list) +
                    getWallInteractForce(walls);
                    //+getAgvInteractForce(agvs);
-
+    // std::cout<<"pede.cpp line 169: "<<acceleration<<"\n";
     // std::cout<<"AGV vector3f: "<<getAgvInteractForce(agvs)<<"\n";
     // Compute New Velocity
     velocity = velocity + acceleration * stepTime;
