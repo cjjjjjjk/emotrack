@@ -37,6 +37,7 @@ private:
     
     // for rendering
     float radius = 0.2;
+    bool stopAtCorridor;
 
 public:
     Pendestrian() : start(nullptr), end(nullptr), journey({}) {
@@ -61,7 +62,7 @@ public:
     void SetEndWard(std::shared_ptr<Ward> ward) {end = ward;} 
     void addWard(std::shared_ptr<Ward> ward) {journey.push_back(ward);};
 
-
+    float getStopAtCorridor() const { return stopAtCorridor; }
     int GetID() {return this->ID;};
     double GetAge() { return this->age;};
     PedesType GetPedesType(){return type;};

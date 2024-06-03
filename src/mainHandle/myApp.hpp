@@ -17,6 +17,7 @@ int numberOfPersonel = 0;
 int numberOfVisitor = 0;
 int numberOfPatient = 0;
 int numberOfAgent = (int)inputData["numOfAgents"]["value"];
+float walkwayWidth = (float)inputData["hallwayWidth"]["value"];
 int checkType(double age, double v) // 1-Personel  2-Patient 3-Visitor
 {
     if(age < 61 && age > 23 && v > 1.2) return 1;
@@ -45,6 +46,114 @@ Point3f GetWardRandomPosition(std::shared_ptr<Ward> ward)
     return p;
 }
 
+// Ham xay dung path
+void setPedesFlow(std::shared_ptr<Pendestrian> &pedes, int caseJump, std::vector<float> juncData)
+{
+    // if (socialForce->getCrowdSize() < threshold)
+    // {
+    //     agent->setStopAtCorridor(true);
+    // }
+    float desiredSpeed = pedes->getDesiredSpeed();
+    int codeSrc = 0;
+    int codeDes = 0;
+
+    int juncType = juncData.size();
+
+    if (juncType == 4)
+    {
+        if (caseJump < 3)
+        {
+            codeSrc = 0; // Go from Left to Right
+        }
+        else if (caseJump < 6)
+        {
+            codeSrc = 1; // Go from Right to Left
+        }
+        else if (caseJump < 9)
+        {
+            codeSrc = 2; // Go from Top to Bottom
+        }
+        else
+        {
+            codeSrc = 3; // Go from Bottom to Top
+        }
+    }
+    else if (juncType == 3)
+    {
+        if (caseJump < 6)
+        {
+            codeSrc = 0;
+            if (caseJump % 2 == 0)
+            {
+                codeDes = 0;
+            }
+            else
+            {
+                codeDes = 2;
+            }
+        }
+        else if (caseJump < 12)
+        {
+            codeSrc = 1;
+            if (caseJump % 2 == 0)
+            {
+                codeDes = 1;
+            }
+            else
+            {
+                codeDes = 2;
+            }
+        }
+        else if (caseJump < 18)
+        {
+            codeSrc = 3;
+            if (caseJump % 2 == 0)
+            {
+                codeDes = 0;
+            }
+            else
+            {
+                codeDes = 1;
+            }
+        }
+    }
+    else if (juncType == 2)
+    {
+        if (caseJump < 3)
+        {
+            codeSrc = 0;
+        }
+        else
+        {
+            codeSrc = 1;
+        }
+    }
+
+    // vector<float> position = Utility::getPedesSource(
+    //     codeSrc,
+    //     (float)inputData["totalCrowdLength"]["value"],
+    //     (float)inputData["headCrowdLength"]["value"],
+    //     (float)inputData["crowdWidth"]["value"],
+    //     walkwayWidth,
+    //     juncData);
+    vector<float> desList;
+
+    if (juncType == 4 || juncType == 2)
+    {
+        desList = Utility::getPedesDestination(codeSrc, caseJump % 3, walkwayWidth, juncData, pedes->getStopAtCorridor());
+    }
+    else if (juncType == 3)
+    {
+        desList = Utility::getPedesDestination(codeDes, caseJump % 3, walkwayWidth, juncData, pedes->getStopAtCorridor());
+    }
+
+    // pedes->setPosition(position[0], position[1]);
+    if (juncType == 3 && codeSrc != codeDes)
+    {
+        pedes->setPath(randomFloat(-walkwayWidth / 2, walkwayWidth / 2), randomFloat(-walkwayWidth / 2, walkwayWidth / 2), 2.0);
+    }
+    pedes->setPath(desList[0], desList[1], desList[2]);
+}
 void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian_list, int M = 50)
 {
     int IDcount = 0;
@@ -298,13 +407,15 @@ void SetPedesJourney(std::vector<std::shared_ptr<Pendestrian>> &pedestrian_list,
 }
 
 
+// First destination.
 void SetPedesDestination(std::vector<std::shared_ptr<Pendestrian>> &Pedes_list)
 {
     for(std::shared_ptr<Pendestrian>  pedes : Pedes_list)
     {
         std::shared_ptr<Ward> fWard = pedes->getStartWard();
         Point3f Destination_position = GetWardRandomPosition(fWard);
-
+        // std::cout<<"myAP linr 416 : pos"<<Destination_position<<"\n";
         pedes->setDestination(Destination_position.x, Destination_position.y);
+        pedes->setPath(Destination_position.x, Destination_position.y, pedes->getRadius());
     }
 }

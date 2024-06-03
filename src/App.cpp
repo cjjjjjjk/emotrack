@@ -39,7 +39,7 @@ std::vector<json> juncDataList;
 std::vector<float> juncData;
 std::string juncName;
 int juncIndex = 0;
-float walkwayWidth;
+// float walkwayWidth;
 
 int classificationType = 0;
 
@@ -62,6 +62,7 @@ void init();
 void createWalls();
 
 void createAgents();
+void setPedesPath(std::vector<float> juncData);
 
 void createAGVs();
 
@@ -118,42 +119,6 @@ int main(int argc, char **argv)
         std::cout<<"\nERROR: Can not open hospital map  file !! \n";
     }
     socialForce->setWard_list(room_list);
-    // =========================================================================================== Hai
-    // ===============================================================================================
-
-    // Create pedestrian arr ================= author: Hai ===========================================
-    // Xây dựng mảng các người đi bộ (pedestrian)
-    CreatePedestrian_list(pedestrian_list, 50);
-    SetPedesJourney(pedestrian_list, room_list);
-    socialForce->SetPedeslist(pedestrian_list);
-    SetPedesDestination(pedestrian_list);
-
-    for(auto pedes : pedestrian_list)
-    {
-        std::cout<<"App line 133: ID "<<pedes->GetID()<<"\t"<<"POs: "<<pedes->getPosition()<<"    \tVelo: "<<pedes->getVelocity()<<"\tdes: "<<pedes->getDestination()<<"\n";
-    }
-    // // Test thong tin pedestrian =============================================RUN-> ERROR: Core dumped
-    // std::cout<<"Number of pedestrians: "<<pedestrian_list.size()<<"\n===================================\n";
-    // for(long unsigned int i = 0; i<= pedestrian_list.size(); i++)
-    // {
-    // std::string type;
-    // if(pedestrian_list[i]->GetPedesType() == PedesType::patient) type = "Patient ";
-    // else if(pedestrian_list[i]->GetPedesType() == PedesType::personel) type = "Personel ";
-    // else if(pedestrian_list[i]->GetPedesType() == PedesType::visitor) type = "Visitor ";
-    // std::cout<<"ID : "<<pedestrian_list[i]->GetID()<<"   \t- "<<type<<'\n';
-    // std::cout<<"Age: "<<pedestrian_list[i]->GetAge()<<"   \t- V: "<<pedestrian_list[i]->GetVelo()<<"\n";
-    // pedestrian_list[i]->setPosition(Point3f(4, 4, 0));
-    // std::cout<<"Position : "<<pedestrian_list[i]->getPosition().x<<" \t"<<pedestrian_list[i]->getPosition().y<<"\n";
-    // std::cout<<"===================================\n";
-    // }
-    // ===============================================================================================
-
-
-
-
-
-
-
 
 
 //hide Main program ================= line 150 - 227 
@@ -225,6 +190,39 @@ int main(int argc, char **argv)
     {
         glutHideWindow();
     }
+    // =========================================================================================== Hai
+    // ===============================================================================================
+
+    // Create pedestrian arr ================= author: Hai ===========================================
+    // Xây dựng mảng các người đi bộ (pedestrian)
+    CreatePedestrian_list(pedestrian_list, 50);
+    SetPedesJourney(pedestrian_list, room_list);
+    socialForce->SetPedeslist(pedestrian_list);
+    // test set pedes path ------------------ Hai
+    // setPedesPath(juncData);
+    SetPedesDestination(pedestrian_list);
+    for(auto pedes : pedestrian_list)
+    {
+        std::cout<<"App line 233: ID "<<pedes->GetID()<<"\tFW:"<<pedes->getStartWard()->GetID()<<"\tPOs: "<<pedes->getPosition()<<"    \tVelo: "<<pedes->getVelocity()<<"\tdes: "<<pedes->getDestination()
+        <<"\t  Path:"<<pedes->getPath()<<"\n";
+    }
+    // ------------------------------------------
+    
+    // // Test thong tin pedestrian =============================================RUN-> ERROR: Core dumped
+    // std::cout<<"Number of pedestrians: "<<pedestrian_list.size()<<"\n===================================\n";
+    // for(long unsigned int i = 0; i<= pedestrian_list.size(); i++)
+    // {
+    // std::string type;
+    // if(pedestrian_list[i]->GetPedesType() == PedesType::patient) type = "Patient ";
+    // else if(pedestrian_list[i]->GetPedesType() == PedesType::personel) type = "Personel ";
+    // else if(pedestrian_list[i]->GetPedesType() == PedesType::visitor) type = "Visitor ";
+    // std::cout<<"ID : "<<pedestrian_list[i]->GetID()<<"   \t- "<<type<<'\n';
+    // std::cout<<"Age: "<<pedestrian_list[i]->GetAge()<<"   \t- V: "<<pedestrian_list[i]->GetVelo()<<"\n";
+    // pedestrian_list[i]->setPosition(Point3f(4, 4, 0));
+    // std::cout<<"Position : "<<pedestrian_list[i]->getPosition().x<<" \t"<<pedestrian_list[i]->getPosition().y<<"\n";
+    // std::cout<<"===================================\n";
+    // }
+    // ===============================================================================================
 
     init();                   // Initialization
     glutDisplayFunc(display); // Send graphics to display window
@@ -562,6 +560,13 @@ void setAgentsFlow(Agent *agent, float desiredSpeed, float maxSpeed, float minSp
     socialForce->addAgent(agent);
 }
 
+void setPedesPath(std::vector<float> juncData)
+{
+    for(auto pedes : pedestrian_list)
+    {
+        setPedesFlow(pedes, 4, juncData);
+    }
+}
 void createAgents()
 {
     Agent *agent;
@@ -881,37 +886,33 @@ void update()
 
     for (std::shared_ptr<Pendestrian> pedes : pedestrian_list)
     {
-        Point3f src = pedes->getPosition();
-        Point3f des = pedes->getDestination();
-
-        if (Utility::isPositionErr(src, walkwayWidth, juncData.size(), socialForce->getAGVs()))
+        Point3f curPos = pedes->getPosition();
+        Point3f curDes = pedes->getDestination();
+        if (Utility::isPositionErr(curPos, walkwayWidth, juncData.size(), socialForce->getAGVs()))
         {
-            socialForce->removeAgent(pedes->GetID());
+            socialForce->removePedes(pedes->GetID());
             continue;
         }
-
         if (pedes->getVelocity().length() < LOWER_SPEED_LIMIT + 0.2 &&
-            pedes->getMinDistanceToWalls(socialForce->getWalls(), src, pedes->getRadius()) < 0.2 
+            pedes->getMinDistanceToWalls(socialForce->getWalls(), curPos, pedes->getRadius()) < 0.2 
             // && (pedes->interDes).size() == 0
             )
         {
-            Point3f intermediateDes = Utility::getIntermediateDes(src, walkwayWidth, walkwayWidth);
+            Point3f intermediateDes = Utility::getIntermediateDes(curPos, walkwayWidth, walkwayWidth);
 
             // (pedes->interDes).push_back(intermediateDes);
             pedes->setPath(intermediateDes.x, intermediateDes.y, 1.0);
-            pedes->setPath(des.x, des.y, 1.0);
+            pedes->setPath(curDes.x, curDes.y, 1.0);
         }
-
         // if ((pedes->interDes).size() > 0)
         // {
-        //     float distanceToInterDes = src.distance((pedes->interDes).front());
+        //     float distanceToInterDes = curPos.distance((pedes->interDes).front());
         //     if (distanceToInterDes <= 1)
         //     {
         //         (pedes->interDes).clear();
         //     }
         // }
-
-        float distanceToTarget = src.distance(des);
+        float distanceToTarget = curPos.distance(curDes);
         if (distanceToTarget <= 1 || isnan(distanceToTarget))
         {
             pedes->setIsMoving(false);
@@ -1059,7 +1060,7 @@ void update()
 
     if (animate)
     {
-        // socialForce->movePedes(static_cast<float>(frameTime) / 1000);
+        socialForce->movePedes(static_cast<float>(frameTime) / 1000);
         socialForce->moveCrowd(static_cast<float>(frameTime) / 1000); // Perform calculations and move agents
         socialForce->moveAGVs(static_cast<float>(frameTime) / 1000);
     }
