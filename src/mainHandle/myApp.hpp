@@ -30,12 +30,16 @@ std::vector<Point3f> CreateRandomPosition(int M = 50);
 Point3f GetWardRandomPosition(std::shared_ptr<Ward> ward)
 {
     double x_min = ward->GetGate1_x() - ward->GetLength()/2 + 1.0 ;
-    double x_max = x_min + ward->GetLength() - 1.0;
+    double x_max = x_min + ward->GetLength() - 2.0;
     double y_min = ward->GetGate2_y() + 1.0;
     double y_max = ward->GetGate1_y() - 1.0;
 
     // Khởi tạo seed cho hàm rand()
-    std::srand(std::time(0));
+    static bool initialized = false;
+    if (!initialized) {
+        std::srand(std::time(0));
+        initialized = true;
+    }
         Point3f p;
         // Tạo giá trị ngẫu nhiên cho x trong khoảng [x_min, x_max]
         p.x = x_min + static_cast<double>(rand()) / (static_cast<double>(RAND_MAX / (x_max - x_min)));

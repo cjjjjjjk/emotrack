@@ -240,6 +240,7 @@ void Renderer::drawWalls(SocialForce *socialForce)
 
     glColor3f(0.2F, 0.2F, 0.2F);
     glPushMatrix();
+    glLineWidth(5.0);
     for (Wall *wall : walls)
     {
         glBegin(GL_LINES);
@@ -250,7 +251,30 @@ void Renderer::drawWalls(SocialForce *socialForce)
     glPopMatrix();
 }
 
-void Renderer::drawText(float x, float y, const char text[])
+void Renderer::drawREDline(Point3f start, Point3f end)
+{
+glPushAttrib(GL_ENABLE_BIT); 
+// # glPushAttrib is done to return everything to normal after drawing
+glColor3f( 255.0, 0, 0.);
+glLineWidth(0.2);
+glLineStipple(1, 0xFFF0); 
+glEnable(GL_LINE_STIPPLE);
+glBegin(GL_LINES);
+        glVertex2f(start.x, start.y);
+        glVertex2f(end.x, end.y);
+glEnd();
+
+glPopAttrib();
+
+        // glColor3f( 255.0, 0, 0.);
+        // glEnable(GL_LINE_STIPPLE);
+        // glBegin(GL_LINE_STRIP);
+        // glVertex2f(start.x, start.y);
+        // glVertex2f(end.x, end.y);
+        // glEnd();
+}
+
+void Renderer::drawText(float x, float y, const char text[], int type )
 {
     glDisable(GL_LIGHTING); // Disable lighting for proper display of 'drawText()'
     glDisable(
@@ -259,7 +283,7 @@ void Renderer::drawText(float x, float y, const char text[])
     glPushMatrix();
     glTranslatef(x, y, 0.0);
     glScalef(0.0045F, 0.0045F, 0.0);
-    glLineWidth(2.0F);
+    if(!type) glLineWidth(2.0F); else glLineWidth(4.0F);
 
     int idx = 0;
     while (text[idx] != '\0')
@@ -311,24 +335,24 @@ void Renderer::showInformation(
         char ch = ward->GetID();  // The character to convert
         std::string str(1, ch); // Create a string with one occurrence of ch
         const char* name = str.c_str(); // Get the C-style string
-        drawText(ward->GetGate1_x() - 1.5, ward->GetGate1_y() - 1.0F, name);
+        drawText(ward->GetGate1_x() - 1.5, ward->GetGate1_y() - 1.0F, name, 1);
     }
     //---------------------------------------
 
     // Total Agents
-    drawText(margin.x - 2.0F, margin.y +11.0F, "Total agents:");
+    drawText(margin.x+ 38.5, margin.y - 5.0F , "Total agents:");
     std::string s = std::to_string(socialForce->getCrowdSize());
     drawText(
-        margin.x + 2.0F, margin.y +11.0F, // totalAgentsStr
+       margin.x+ 38.5+ 4.0F, margin.y - 5.0F, // totalAgentsStr
         s.c_str());
 
     // FPS
-    drawText(margin.x + 18.0F, margin.y +11.0F, "FPS:");
+    drawText(margin.x+ 38.5, margin.y - 4.0F , "FPS:");
     s = std::to_string(static_cast<int>(fps));
-    drawText(margin.x + 20.5F, margin.y +11.0F, s.c_str() /*fpsStr*/);
+    drawText(margin.x+ 42.5, margin.y - 4.0F , s.c_str() /*fpsStr*/);
 
     // Simulation Time
-    drawText(margin.x + 5.0F, margin.y +11.0F, "Simulation time:");
+    drawText(margin.x+ 38.5, margin.y - 4.0F - 2.0F, "Simulation time:");
     if (animate)
     {
         s = convertTime(currTime - startTime);
@@ -338,7 +362,7 @@ void Renderer::showInformation(
         s = convertTime(0);
     }
     drawText(
-        margin.x + 10.0F, margin.y +11.0F, // totalAgentsStr
+        margin.x+ 38.5, margin.y - 4.0F -3.0F, // totalAgentsStr
         s.c_str());
 
     // Appendix

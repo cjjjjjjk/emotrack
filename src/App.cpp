@@ -818,6 +818,9 @@ void display()
     drawWalls(socialForce);
     glPopMatrix();
 
+    //  drawing red line to current destination ----------------------------------------------------------
+    for(auto pedes : pedestrian_list) if(pedes->GetID()%4 == 0)Renderer::drawREDline(pedes->getPosition(), pedes->getPath());
+    // ---------------------------------------------------------------------------------------------------
     // not show infor - testting
     showInformation(socialForce, fps, animate, currTime, startTime, classificationType, winWidth, winHeight);
     // not show infor - testting

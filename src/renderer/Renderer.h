@@ -12,6 +12,7 @@
 #include "src/constant/Constant.h"
 #include "src/utility/Utility.h"
 #include "src/ward/Ward.h"
+#include "lib/vecmath/vecmath.h"
 
 using namespace Constant;
 using namespace Utility;
@@ -32,8 +33,8 @@ namespace Renderer
         float height = 0.5);
 
     void drawWalls(SocialForce *socialForce);
-
-    void drawText(float x, float y, const char text[]);
+    void drawREDline(Point3f start, Point3f end );
+    void drawText(float x, float y, const char text[], int type = 0);
 
     void drawSquare(double x1, double y1, double sidelength, Color3f color);
 
