@@ -891,11 +891,16 @@ void update()
             if(pedes->getJourney().size() ==  3 )
             {
                 std::shared_ptr<Ward> w = pedes->nWard();
+                if(w)
+                {
                 Point3f newPt = GetWardRandomPosition(w);
                 pedes->setPath(newPt.x, newPt.y, 0.2); 
+                pedes->setDestination(newPt.x, newPt.y);
+                }
             }else{
-                pedes->setIsMoving(false);
+                // pedes->setIsMoving(false);
             }
+            distanceToTarget = 999.0;
         }
     }
     // -----------------------------------------------------------------------------------------

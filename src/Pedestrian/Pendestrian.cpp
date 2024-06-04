@@ -5,8 +5,7 @@ std::shared_ptr<Ward> Pendestrian::nWard()
     upWard();
     if(cWard >= journey.size())
     {
-        std::shared_ptr<Ward> w = std::make_shared<Ward>();
-        return w;
+        return nullptr;
     }
     else{
         return journey[cWard];
