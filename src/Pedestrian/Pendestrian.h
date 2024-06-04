@@ -39,6 +39,7 @@ private:
     float radius = 0.2;
     bool stopAtCorridor;
 
+    int cWard = 0;
 public:
     Pendestrian() : start(nullptr), end(nullptr), journey({}) {
         std::cout<<" Create a pedestrian ! \n";
@@ -61,6 +62,8 @@ public:
     void SetStartWard(std::shared_ptr<Ward> ward) {start = ward;};
     void SetEndWard(std::shared_ptr<Ward> ward) {end = ward;} 
     void addWard(std::shared_ptr<Ward> ward) {journey.push_back(ward);};
+    void upWard(){this->cWard+=1;}
+    std::shared_ptr<Ward> nWard();
     // void setPathStack(std::stack<Point3f> pathStack) {this->PathStack = pathStack;};
     // void addPath(Point3f newPath) {this->PathStack.push(newPath);}
     // std::stack<Point3f> getPathStack() {return PathStack;};

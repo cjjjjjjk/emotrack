@@ -876,20 +876,7 @@ void update()
 
     int count_agents = 0, count_agvs = 0;
     // Update Pedestrian --------------------------------
-    //==========================================================================================
-    // Testing
-    
-    // auto pedeslist = socialForce->getPedes_list();
-    // auto pedes = pedeslist[0];
-    // Point3f pos = pedes->getPosition();
-    // pos.x += 0.004;
-    // pos.y += 0.004;
-    // pedes->setPosition(pos);
-    
-    // std::cout<<"TEST: "<<pedes->getVelocity().x<<" "<<pedes->getVelocity().y<<"\n";
-    // std::vector<std::shared_ptr<Pendestrian>> pedes_list = socialForce->getPedes_list(); 
-    
-
+    //=========================================================================================
     for (std::shared_ptr<Pendestrian> pedes : pedestrian_list)
     {
         Point3f curPos = pedes->getPosition();
@@ -903,7 +890,7 @@ void update()
             // pedes->setIsMoving(false);
             if(pedes->getJourney().size() ==  3 )
             {
-                std::shared_ptr<Ward> w = pedes->getJourney()[1];
+                std::shared_ptr<Ward> w = pedes->nWard();
                 Point3f newPt = GetWardRandomPosition(w);
                 pedes->setPath(newPt.x, newPt.y, 0.2); 
             }else{
@@ -911,7 +898,6 @@ void update()
             }
         }
     }
-    
     // -----------------------------------------------------------------------------------------
     // =========================================================================================
 

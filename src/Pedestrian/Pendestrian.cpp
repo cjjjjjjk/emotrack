@@ -1,6 +1,19 @@
 #include "Pendestrian.h"
 
-float Pendestrian::getMinDistanceToWalls(std::vector<Wall*>walls, Point3f position, float radius)
+std::shared_ptr<Ward> Pendestrian::nWard()
+{
+    upWard();
+    if(cWard >= journey.size())
+    {
+        std::shared_ptr<Ward> w = std::make_shared<Ward>();
+        return w;
+    }
+    else{
+        return journey[cWard];
+    }
+}
+
+float Pendestrian::getMinDistanceToWalls(std::vector<Wall *> walls, Point3f position, float radius)
 {
     Point3f nearestPoint;
     Vector3f vector;

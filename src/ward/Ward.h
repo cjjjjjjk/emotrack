@@ -9,7 +9,7 @@ private:
     Point2<int> OutPosition;
     int length;
 public:
-    Ward();
+    Ward() {};
     Ward(int G1_x, int G1_y, int G2_x, int G2_y, int length, char ID);
     ~Ward();
 
