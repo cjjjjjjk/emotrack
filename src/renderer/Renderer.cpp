@@ -366,34 +366,34 @@ void Renderer::showInformation(
         s.c_str());
 
     // Appendix
-    if (classificationType == 0)
-    {
-        drawSquare(margin.x+ 38.5, -margin.y + 4.0 + 5.2, 0.3, GREEN);
-        glColor3f(0.0, 0.0, 0.0);
-        drawText(margin.x+ 38.5 + 0.5, -margin.y + 4.0 + 5, "No disability, without overtaking behavior");
+    // if (classificationType == 0)
+    // {
+    //     drawSquare(margin.x+ 38.5, -margin.y + 4.0 + 5.2, 0.3, GREEN);
+    //     glColor3f(0.0, 0.0, 0.0);
+    //     drawText(margin.x+ 38.5 + 0.5, -margin.y + 4.0 + 5, "No disability, without overtaking behavior");
 
-        drawSquare(margin.x+ 38.5, -margin.y + 4.0 + 4.2, 0.3, PURPLE);
-        glColor3f(0.0, 0.0, 0.0);
-        drawText(margin.x+ 38.5 + 0.5, -margin.y + 4.0 + 4, "No disability, with overtaking behavior");
+    //     drawSquare(margin.x+ 38.5, -margin.y + 4.0 + 4.2, 0.3, PURPLE);
+    //     glColor3f(0.0, 0.0, 0.0);
+    //     drawText(margin.x+ 38.5 + 0.5, -margin.y + 4.0 + 4, "No disability, with overtaking behavior");
 
-        drawSquare(margin.x+ 38.5, -margin.y + 4.0 + 3.2, 0.3, RED);
-        glColor3f(0.0, 0.0, 0.0);
-        drawText(margin.x+ 38.5 + 0.5, -margin.y + 4.0 + 3, "Walking with crutches");
+    //     drawSquare(margin.x+ 38.5, -margin.y + 4.0 + 3.2, 0.3, RED);
+    //     glColor3f(0.0, 0.0, 0.0);
+    //     drawText(margin.x+ 38.5 + 0.5, -margin.y + 4.0 + 3, "Walking with crutches");
 
-        drawSquare(margin.x+ 38.5, -margin.y + 4.0 + 2.2, 0.3, WOOD);
-        glColor3f(0.0, 0.0, 0.0);
-        drawText(margin.x+ 38.5 + 0.5, -margin.y + 4.0 + 2, "Walking with sticks");
+    //     drawSquare(margin.x+ 38.5, -margin.y + 4.0 + 2.2, 0.3, WOOD);
+    //     glColor3f(0.0, 0.0, 0.0);
+    //     drawText(margin.x+ 38.5 + 0.5, -margin.y + 4.0 + 2, "Walking with sticks");
 
-        drawSquare(margin.x+ 38.5, -margin.y + 4.0 + 1.2, 0.3, GRAY);
-        glColor3f(0.0, 0.0, 0.0);
-        drawText(margin.x+ 38.5 + 0.5, -margin.y + 4.0 + 1, "Wheelchairs");
+    //     drawSquare(margin.x+ 38.5, -margin.y + 4.0 + 1.2, 0.3, GRAY);
+    //     glColor3f(0.0, 0.0, 0.0);
+    //     drawText(margin.x+ 38.5 + 0.5, -margin.y + 4.0 + 1, "Wheelchairs");
 
-        drawSquare(margin.x+ 38.5, -margin.y + 4.0 + 0.2, 0.3, BLACK);
-        glColor3f(0.0, 0.0, 0.0);
-        drawText(margin.x+ 38.5 + 0.5, -margin.y + 4.0, "The blind");
-    }
-    else
-    {
+    //     drawSquare(margin.x+ 38.5, -margin.y + 4.0 + 0.2, 0.3, BLACK);
+    //     glColor3f(0.0, 0.0, 0.0);
+    //     drawText(margin.x+ 38.5 + 0.5, -margin.y + 4.0, "The blind");
+    // }
+    // else
+    // {
         drawSquare(margin.x+ 38.5, -margin.y + 6.0 + 2.2, 0.3, GREEN);
         glColor3f(0.0, 0.0, 0.0);
         drawText(margin.x+ 39, -margin.y + 6.0 + 2, "Visitor");
@@ -405,7 +405,7 @@ void Renderer::showInformation(
         drawSquare(margin.x + 38.5, -margin.y + 6.0 + 0.2, 0.3, RED);
         glColor3f(0.0, 0.0, 0.0);
         drawText(margin.x+ 39, -margin.y + 6.0, "Patient");
-    }
+    // }
 }
 
 void Renderer::computeFPS(float *fps)
