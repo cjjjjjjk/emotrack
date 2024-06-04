@@ -24,8 +24,13 @@ int checkType(double age, double v) // 1-Personel  2-Patient 3-Visitor
     if(age > 80 || v < 0.7) return 2;
     return 3;
 }
+bool checkInsideWardP(Point3f position)
+{
+    
+
+}
 // Tạo tọa độ bất kỳ cho một pedés trong bệnh viện.
-std::vector<Point3f> CreateRandomPosition(int M = 50);
+std::vector<Point3f> CreateRandomPosition(int M, std::vector<std::shared_ptr<Pendestrian>> &pede_lis);
 // Lấy một tọa độ bất kỳ trong 1 Ward (Xây dụng điểm đến cho một pedestrian)
 Point3f GetWardRandomPosition(std::shared_ptr<Ward> ward)
 {
@@ -176,7 +181,6 @@ void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian
     // Vector van toc ======
     float deviationParam = randomFloat(1 - (float)inputData["experimentalDeviation"]["value"] / 100, 1 + (float)inputData["experimentalDeviation"]["value"] / 100);
     // Vecto toa do
-    std::vector<Point3f> position_list = CreateRandomPosition();
     
     // cout << "Deviation: "<< deviationParam <<" - Num agents: "<< int(int(inputData["numOfAgents"]["value"]) * deviationParam) << endl;
     vector<double> velocityList = Utility::getPedesVelocity(0, inputData, deviationParam);
@@ -199,7 +203,6 @@ void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian
                     std::shared_ptr<Personel> personel = std::make_shared<Personel>(IDcount, age);
                     numberOfPersonel++;
                     // Xay dung cac gia tri con lai
-                    personel->setPosition(position_list[i]);
                     personel->SetVelocity(v);
                     personel->setColor(133.0, 22.0, 255.0);
                     personel->SetType(PedesType::personel);
@@ -212,7 +215,6 @@ void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian
                     visitor->SetType(PedesType::visitor);
                     visitor->SetVelocity(v);
                     visitor->setColor(0.0, 128.0, 0.0);
-                    visitor->setPosition(position_list[i]);
                     pedestrian_list.push_back(visitor);
                 }
         } else if(checkType(age, v) == 2) // patient
@@ -223,7 +225,6 @@ void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian
             patient->SetType(PedesType::patient);
             patient->SetVelocity(v);
             patient->setColor(216.0, 32.0, 42.0);
-            patient->setPosition(position_list[i]);
             pedestrian_list.push_back(patient);
         } else
         {
@@ -233,7 +234,6 @@ void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian
             visitor->SetType(PedesType::visitor);
             visitor->SetVelocity(v);
             visitor->setColor(0.0, 128.0, 0.0);
-            visitor->setPosition(position_list[i]);
             pedestrian_list.push_back(visitor);
         }
     }
@@ -245,20 +245,22 @@ void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian
 }
 
 // Hàm sinh ra mảng tọa độ bất kỳ
-std::vector<Point3f> CreateRandomPosition(int M) {
-    // Đặt giới hạn cho tọa độ x và y dựa trên tọa độ các góc của căn phòng
-    double x_min = -19.8;
-    double x_max = 19.8;
-    double y_min = -10.8;
-    double y_max = 10.8;
+std::vector<Point3f> CreateRandomPosition(int M, std::vector<std::shared_ptr<Pendestrian>> &pedes_list) {
 
-    std::vector<Point3f> points;
-    points.reserve(M); // Dự trữ không gian cho M phần tử
-
+    std::cout<<"lin251: "<<pedes_list.size()<<" \n";
     // Khởi tạo seed cho hàm rand()
     std::srand(std::time(0));
-
+    double x_min, x_max, y_min, y_max;
+    std::vector<Point3f> points;
     for (int i = 0; i < M; ++i) {
+    // Đặt giới hạn cho tọa độ x và y dựa trên tọa độ các góc của căn phòng
+    std::shared_ptr<Ward> startWard = pedes_list[i]->getStartWard();
+    x_min = startWard->GetGate1_x() - startWard->GetLength()/2 - 1.5F;
+    x_max = x_min + startWard->GetLength() + 3.0;
+    y_min = startWard->GetGate2_y() + 2.0F;
+    y_max = startWard->GetGate1_y() - 2.0F;
+    if(y_max >= 11)y_max =10.6; 
+    points.reserve(M); // Dự trữ không gian cho M phần tử
         Point3f p;
         // Tạo giá trị ngẫu nhiên cho x trong khoảng [x_min, x_max]
         p.x = x_min + static_cast<double>(rand()) / (static_cast<double>(RAND_MAX / (x_max - x_min)));
@@ -267,6 +269,7 @@ std::vector<Point3f> CreateRandomPosition(int M) {
         p.z = 0.0;
         // Thêm điểm vào vector
         points.push_back(p);
+        pedes_list[i]->setPosition(p.x , p.y);
     }
     return points;
 }

@@ -34,7 +34,7 @@ private:
     std::shared_ptr<Ward> end;
 
     std::vector<std::shared_ptr<Ward>> journey; 
-    std::stack<Point3f> PathStack;
+    // std::stack<Point3f> PathStack;
     // for rendering
     float radius = 0.2;
     bool stopAtCorridor;
@@ -61,8 +61,9 @@ public:
     void SetStartWard(std::shared_ptr<Ward> ward) {start = ward;};
     void SetEndWard(std::shared_ptr<Ward> ward) {end = ward;} 
     void addWard(std::shared_ptr<Ward> ward) {journey.push_back(ward);};
-    void setPathStack(std::stack<Point3f> pathStack) {this->PathStack = pathStack;};
-    void addPath(Point3f newPath) {this->PathStack.push(newPath);}
+    // void setPathStack(std::stack<Point3f> pathStack) {this->PathStack = pathStack;};
+    // void addPath(Point3f newPath) {this->PathStack.push(newPath);}
+    // std::stack<Point3f> getPathStack() {return PathStack;};
     float getStopAtCorridor() const { return stopAtCorridor; }
     int GetID() {return this->ID;};
     double GetAge() { return this->age;};
@@ -71,7 +72,6 @@ public:
     std::shared_ptr<Ward> getStartWard() {return start;};
     std::shared_ptr<Ward> getEndWard() {return end;};
     std::vector<std::shared_ptr<Ward>> getJourney() {return journey;};
-    std::stack<Point3f> getPathStack() {return PathStack;};
     
     // Radius
     void setRadius(float radius);
