@@ -247,7 +247,6 @@ void CreatePedestrian_list(std::vector<std::shared_ptr<Pendestrian>> &pedestrian
 // Hàm sinh ra mảng tọa độ bất kỳ
 std::vector<Point3f> CreateRandomPosition(int M, std::vector<std::shared_ptr<Pendestrian>> &pedes_list) {
 
-    std::cout<<"lin251: "<<pedes_list.size()<<" \n";
     // Khởi tạo seed cho hàm rand()
     std::srand(std::time(0));
     double x_min, x_max, y_min, y_max;
