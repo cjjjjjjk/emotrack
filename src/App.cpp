@@ -197,6 +197,7 @@ int main(int argc, char **argv)
     // Xây dựng mảng các người đi bộ (pedestrian)
     CreatePedestrian_list(pedestrian_list, 50);
     SetPedesJourney(pedestrian_list, room_list);
+    std::vector<Point3f> position_list = CreateRandomPosition(50, pedestrian_list);
     socialForce->SetPedeslist(pedestrian_list);
     // test set pedes path ------------------ Hai
     // setPedesPath(juncData);
@@ -819,7 +820,9 @@ void display()
     glPopMatrix();
 
     //  drawing red line to current destination ----------------------------------------------------------
-    for(auto pedes : pedestrian_list) if(pedes->GetID()%4 == 0)Renderer::drawREDline(pedes->getPosition(), pedes->getPath());
+    for(auto pedes : pedestrian_list) 
+    // if(pedes->GetID()%4 == 0)
+    Renderer::drawREDline(pedes->getPosition(), pedes->getPath());
     // ---------------------------------------------------------------------------------------------------
     // not show infor - testting
     showInformation(socialForce, fps, animate, currTime, startTime, classificationType, winWidth, winHeight);
