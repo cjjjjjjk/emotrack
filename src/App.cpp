@@ -894,39 +894,21 @@ void update()
     {
         Point3f curPos = pedes->getPosition();
         Point3f curDes = pedes->getDestination();
-        if (Utility::isPositionErr(curPos, walkwayWidth, juncData.size(), socialForce->getAGVs()))
-        {
-            socialForce->removePedes(pedes->GetID());
-            continue;
-        }
-        if (pedes->getVelocity().length() < LOWER_SPEED_LIMIT + 0.2 &&
-            pedes->getMinDistanceToWalls(socialForce->getWalls(), curPos, pedes->getRadius()) < 0.2 
-            // && (pedes->interDes).size() == 0
-            )
-        {
-            Point3f intermediateDes = Utility::getIntermediateDes(curPos, walkwayWidth, walkwayWidth);
+        Point3f curPat = pedes->getPath();
 
-            // (pedes->interDes).push_back(intermediateDes);
-            pedes->setPath(intermediateDes.x, intermediateDes.y, 1.0);
-            pedes->setPath(curDes.x, curDes.y, 1.0);
-        }
-        // if ((pedes->interDes).size() > 0)
-        // {
-        //     float distanceToInterDes = curPos.distance((pedes->interDes).front());
-        //     if (distanceToInterDes <= 1)
-        //     {
-        //         (pedes->interDes).clear();
-        //     }
-        // }
         float distanceToTarget = curPos.distance(curDes);
-        if (distanceToTarget <= 1 || isnan(distanceToTarget))
+        float distanceToCurPath = curPos.distance(curPat);
+        if (distanceToTarget <= 2*pedes->getRadius() || isnan(distanceToTarget))
         {
-            pedes->setIsMoving(false);
-            // if (!pedes->getStopAtCorridor())
-            // {
-            //     socialForce->removeAgent(pedes->getId());
-            // }
-            count_agents = count_agents + 1;
+            // pedes->setIsMoving(false);
+            if(pedes->getJourney().size() ==  3 )
+            {
+                std::shared_ptr<Ward> w = pedes->getJourney()[1];
+                Point3f newPt = GetWardRandomPosition(w);
+                pedes->setPath(newPt.x, newPt.y, 0.2); 
+            }else{
+                pedes->setIsMoving(false);
+            }
         }
     }
     
